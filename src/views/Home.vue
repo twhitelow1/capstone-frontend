@@ -7,9 +7,19 @@
       <p>Date Due: {{ assignment.due_date }}</p>
       <p>Assigned By: {{ assignment.assigner_id }}</p>
       <button>Complete</button>
-      <button>More Info</button>
+      <button v-on:click="showAssignment(assignment)">More Info</button>
       <p>-----------------------------------------</p>
     </div>
+    <dialog id="assignment-details">
+      <form method="dialog">
+        <h1>Assignment Info</h1>
+        <p>Assigned To: {{ currentAssignment.user.first_name }}</p>
+        <p>Chore: {{ currentAssignment.chore.title }}</p>
+        <p>Date Due: {{ currentAssignment.due_date }}</p>
+        <p>Assigned By: {{ currentAssignment.assigner_id }}</p>
+        <button>Close</button>
+      </form>
+    </dialog>
     <h2>Assign A Chore</h2>
     <div v-for="(chore, index) in chores" :key="index">
       <p>Chore Name: {{ chore.title }}</p>
@@ -46,6 +56,7 @@ export default {
       newChorePointsPrice: "",
       newChoreRoomId: "",
       fromUnixTime,
+      currentAssignment: {},
     };
   },
   created: function() {
@@ -58,6 +69,11 @@ export default {
         console.log("chores index", response);
         this.chores = response.data;
       });
+    },
+    showAssignment: function(assignment) {
+      this.currentAssignment = assignment;
+      console.log("current assignment", this.currentAssignment);
+      document.querySelector("#assignment-details").showModal();
     },
     indexAssignments: function() {
       axios.get("/api/assignments").then(response => {
