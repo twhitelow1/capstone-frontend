@@ -7,6 +7,7 @@
       <p>Date Due: {{ assignment.due_date }}</p>
       <p>Assigned By: {{ assignment.assigner_id }}</p>
       <button>Complete</button>
+      <button>More Info</button>
       <p>-----------------------------------------</p>
     </div>
     <h2>Assign A Chore</h2>
@@ -19,6 +20,7 @@
       <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
       <p>Room: {{ chore.room.name }}</p>
       <button>Assign Chore</button>
+      <button>More Info</button>
       <br />
       <p>-----------------------------------------</p>
     </div>
