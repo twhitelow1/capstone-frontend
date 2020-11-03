@@ -1,31 +1,24 @@
 <template>
   <div class="home">
-    <h1>Chores</h1>
-    <h2>Add Chore</h2>
-        Title: <input type="text" v-model="newChoreTitle" />
-        Desc: <input type="text" v-model="newChoreDesc" />
-        Frequency: <input type="text" v-model="newChoreFrequency" />
-        Points You Can Earn: <input type="text" v-model="newChorePointsGain" />
-        Points It Cost: <input type="text" v-model="newChorePointsPrice" />
-        Room Id: <input type="text" v-model="newChoreRoomId" />
-        <button v-on:click="createChore()">Create Chore</button>
-    <h2>All Chores</h2>
-    <div v-for="chore in chores" :key="chore.id">
+    <h1>To Do List</h1>
+    <div v-for="assignment in assignments" :key="`assign-${assignment.id}`">
+      <p>ID: {{ assignment.id }}</p>
+      <p>user: {{ assignment.user.first_name }}</p>
+      <p>chore: {{ assignment.chore.title }}</p>
+      <p>Date Due: {{ assignment.due_date }} </p>
+      <button>Complete</button>
+      <p>-----------------------------------------</p>
+    </div>
+    <h2>Assign A Chore</h2>
+    <div v-for="(chore, index) in chores" :key="index">
       <p>Title: {{ chore.title }}</p>
       <p>desc: {{ chore.desc }}</p>
-      <p>frequency: {{ chore.frequency }}</p>
+      <p>frequency: {{ chore.frequency }} days</p>
       <p>last_completed: {{ chore.last_completed }}</p>
       <p>points_gain: {{ chore.points_gain }}</p>
       <p>points_price: {{ chore.points_price }}</p>
       <p>room_id: {{ chore.room_id }}</p>
-      <br>
-      <p>-----------------------------------------</p>
-    </div>
-    <h1>To Do List</h1>
-    <div v-for="assignment in assignments" :key="assignment.id">
-      <p>ID: {{ assignment.id }}</p>
-      <p>user: {{ assignment.user.first_name }}</p>
-      <p>chore: {{ assignment.chore.title }}</p>
+      <br />
       <p>-----------------------------------------</p>
     </div>
   </div>
@@ -35,6 +28,7 @@
 
 <script>
 import axios from "axios";
+import { fromUnixTime } from "date-fns";
 
 export default {
   data: function() {
@@ -44,9 +38,11 @@ export default {
       newChoreDesc: "",
       newChoreTitle: "",
       newChoreFrequency: "",
+      newChoreLastCompleted: "",
       newChorePointsGain: "",
       newChorePointsPrice: "",
       newChoreRoomId: "",
+      fromUnixTime,
     };
   },
   created: function() {
@@ -71,6 +67,7 @@ export default {
         title: this.newChoreTitle,
         desc: this.newChoreDesc,
         frequency: this.newChoreFrequency,
+        last_completed: this.newChoreLastCompleted,
         points_gain: this.newChorePointsGain,
         points_price: this.newChorePointsPrice,
         room_id: this.newChoreRoomId,
@@ -78,14 +75,8 @@ export default {
       axios
         .post("/api/chores", params)
         .then(response => {
+          this.$router.push("/chores");
           console.log("chores create", response);
-          this.chores.push(response.data);
-          this.newChoreRoomId = "";
-          this.newChoreDesc = "";
-          this.newChoreTitle = "";
-          this.newChoreFrequency = "";
-          this.newChorePointsGain = "";
-          this.newChorePointsPrice = "";
         })
         .catch(error => {
           console.log("chores create error", error.response);
