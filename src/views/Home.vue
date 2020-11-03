@@ -13,10 +13,10 @@
     <div v-for="(chore, index) in chores" :key="index">
       <p>Chore Name: {{ chore.title }}</p>
       <p>Description: {{ chore.desc }}</p>
-      <p>How often does the chore need to be done: {{ chore.frequency }} days</p>
+      <p>How often does the chore need to be done: {{ chore.frequency }} day(s)</p>
       <p>Last Time Completed: {{ chore.last_completed }}</p>
-      <p>Points You Can Gain: {{ chore.points_gain }}</p>
-      <p>Posts It Cost To Get Someone Else To Do It: {{ chore.points_price }}</p>
+      <p>Earn: {{ chore.points_gain }} points</p>
+      <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
       <p>Room: {{ chore.room.name }}</p>
       <button>Assign Chore</button>
       <br />
