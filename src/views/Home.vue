@@ -2,22 +2,23 @@
   <div class="home">
     <h1>To Do List</h1>
     <div v-for="assignment in assignments" :key="`assign-${assignment.id}`">
-      <p>ID: {{ assignment.id }}</p>
-      <p>user: {{ assignment.user.first_name }}</p>
-      <p>chore: {{ assignment.chore.title }}</p>
-      <p>Date Due: {{ assignment.due_date }} </p>
+      <p>Assigned To: {{ assignment.user.first_name }}</p>
+      <p>Chore: {{ assignment.chore.title }}</p>
+      <p>Date Due: {{ assignment.due_date }}</p>
+      <p>Assigned By: {{ assignment.assigner_id }}</p>
       <button>Complete</button>
       <p>-----------------------------------------</p>
     </div>
     <h2>Assign A Chore</h2>
     <div v-for="(chore, index) in chores" :key="index">
-      <p>Title: {{ chore.title }}</p>
-      <p>desc: {{ chore.desc }}</p>
-      <p>frequency: {{ chore.frequency }} days</p>
-      <p>last_completed: {{ chore.last_completed }}</p>
-      <p>points_gain: {{ chore.points_gain }}</p>
-      <p>points_price: {{ chore.points_price }}</p>
-      <p>room_id: {{ chore.room_id }}</p>
+      <p>Chore Name: {{ chore.title }}</p>
+      <p>Description: {{ chore.desc }}</p>
+      <p>How often does the chore need to be done: {{ chore.frequency }} days</p>
+      <p>Last Time Completed: {{ chore.last_completed }}</p>
+      <p>Points You Can Gain: {{ chore.points_gain }}</p>
+      <p>Posts It Cost To Get Someone Else To Do It: {{ chore.points_price }}</p>
+      <p>Room: {{ chore.room.name }}</p>
+      <button>Assign Chore</button>
       <br />
       <p>-----------------------------------------</p>
     </div>
