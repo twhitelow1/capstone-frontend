@@ -5,6 +5,7 @@
       <p>Assigned To: {{ assignment.user.first_name }}</p>
       <p>Chore: {{ assignment.chore.title }}</p>
       <p>Date Due: {{ format(parseISO(assignment.due_date), "MM/dd/yyyy") }}</p>
+      <p>Is Completed?: {{ assignment.completed }}</p>
       <p>Assigned By: {{ assignment.assigner_id }}</p>
       <button v-on:click="completeAssignment(assignment)">Complete</button>
       <button v-on:click="showAssignment(assignment)">More Info</button>
@@ -128,6 +129,7 @@ export default {
         user_id: assignment.user.id,
         due_date: assignment.due_date,
         completed_date: date.toISOString(),
+        completed: true,
         assigner_id: assignment.assigner_id,
       };
       axios
@@ -138,6 +140,7 @@ export default {
         .catch(error => {
           console.log("assignments update error", error.response);
         });
+      this.indexAssignments();
     },
     indexUsers: function() {
       axios.get("/api/users").then(response => {
