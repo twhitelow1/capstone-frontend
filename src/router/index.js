@@ -4,7 +4,7 @@ import Signup from "../views/Signup.vue";
 import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Logout from "../views/Logout.vue";
-import AssignmentShow from "../views/AssignmentsShow.vue"
+import AssignmentShow from "../views/AssignmentsShow.vue";
 
 Vue.use(VueRouter);
 

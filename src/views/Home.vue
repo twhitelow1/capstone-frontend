@@ -15,7 +15,7 @@
         <h1>Assignment Info</h1>
         <p>Assigned To: {{ currentAssignment.user.first_name }}</p>
         <p>Chore: {{ currentAssignment.chore.title }}</p>
-        <p>Date Due: {{ currentAssignment.due_date }}</p>
+        <p>Date Due: {{ parseISO(currentAssignment.due_date) }}</p>
         <p>Assigned By: {{ currentAssignment.assigner_id }}</p>
         <button>Close</button>
       </form>
@@ -57,6 +57,7 @@ export default {
   data: function() {
     return {
       chores: [],
+      users: [],
       assignments: [],
       newChoreDesc: "",
       newChoreTitle: "",
@@ -75,6 +76,7 @@ export default {
   created: function() {
     this.indexChores();
     this.indexAssignments();
+    this.indexUsers();
   },
   methods: {
     indexChores: function() {
@@ -135,6 +137,12 @@ export default {
         .catch(error => {
           console.log("assignments update error", error.response);
         });
+    },
+    indexUsers: function() {
+      axios.get("/api/users").then(response => {
+        console.log("users index", response);
+        this.users = response.data;
+      });
     },
   },
 };
