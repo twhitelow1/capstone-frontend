@@ -51,7 +51,7 @@
 <script>
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
-import { fromUnixTime, parseISO, format } from "date-fns";
+import { fromUnixTime, parseISO, format, parseJSON } from "date-fns";
 
 export default {
   data: function() {
@@ -71,6 +71,7 @@ export default {
       currentChore: { room: {} },
       parseISO,
       format,
+      grabbedUser: {},
     };
   },
   created: function() {
