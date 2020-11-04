@@ -10,6 +10,7 @@
       <button v-on:click="showAssignment(assignment)">More Info</button>
       <p>-----------------------------------------</p>
     </div>
+    <div>{{ currentAssignment }}</div>
     <dialog id="assignment-details">
       <form method="dialog">
         <h1>Assignment Info</h1>
@@ -71,9 +72,11 @@ export default {
       });
     },
     showAssignment: function(assignment) {
-      this.currentAssignment = assignment;
-      console.log("current assignment", this.currentAssignment);
-      document.querySelector("#assignment-details").showModal();
+      axios.get(`/api/assignments/${assignment.id}`).then(response => {
+        console.log("current assignment", response);
+        this.currentAssignment = response.data;
+        document.querySelector("#assignment-details").showModal();
+      });
     },
     indexAssignments: function() {
       axios.get("/api/assignments").then(response => {
