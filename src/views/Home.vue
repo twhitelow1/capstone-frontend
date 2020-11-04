@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <h1>To Do List</h1>
+    <a href="?completed=true">Completed</a>
     <div v-for="assignment in assignments" :key="`assign-${assignment.id}`">
       <p>Assigned To: {{ assignment.user.first_name }}</p>
       <p>Chore: {{ assignment.chore.title }}</p>
