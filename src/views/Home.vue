@@ -4,9 +4,9 @@
     <div v-for="assignment in assignments" :key="`assign-${assignment.id}`">
       <p>Assigned To: {{ assignment.user.first_name }}</p>
       <p>Chore: {{ assignment.chore.title }}</p>
-      <p>Date Due: {{ assignment.due_date }}</p>
+      <p>Date Due: {{ format(parseISO(assignment.due_date), "MM/dd/yyyy") }}</p>
       <p>Assigned By: {{ assignment.assigner_id }}</p>
-      <button>Complete</button>
+      <button v-on:click="completeAssignment(assignment)">Complete</button>
       <button v-on:click="showAssignment(assignment)">More Info</button>
       <p>-----------------------------------------</p>
     </div>
@@ -23,15 +23,24 @@
     <h2>Assign A Chore</h2>
     <div v-for="(chore, index) in chores" :key="index">
       <p>Chore Name: {{ chore.title }}</p>
-      <p>Description: {{ chore.desc }}</p>
-      <p>How often does the chore need to be done: {{ chore.frequency }} day(s)</p>
       <p>Last Time Completed: {{ chore.last_completed }}</p>
-      <p>Earn: {{ chore.points_gain }} points</p>
-      <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
       <p>Room: {{ chore.room.name }}</p>
       <button>Assign Chore</button>
-      <button>More Info</button>
+      <button v-on:click="showChore(chore)">More Info</button>
       <br />
+      <dialog id="chore-details">
+        <form method="dialog">
+          <h1>Chore Info</h1>
+          <p>Chore Name: {{ chore.title }}</p>
+          <p>Description: {{ chore.desc }}</p>
+          <p>How often does the chore need to be done: {{ chore.frequency }} day(s)</p>
+          <p>Last Time Completed: {{ chore.last_completed }}</p>
+          <p>Earn: {{ chore.points_gain }} points</p>
+          <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
+          <p>Room: {{ chore.room.name }}</p>
+          <button>Close</button>
+        </form>
+      </dialog>
       <p>-----------------------------------------</p>
     </div>
   </div>
@@ -41,7 +50,8 @@
 
 <script>
 import axios from "axios";
-import { fromUnixTime } from "date-fns";
+// eslint-disable-next-line no-unused-vars
+import { fromUnixTime, parseISO, format } from "date-fns";
 
 export default {
   data: function() {
@@ -57,6 +67,9 @@ export default {
       newChoreRoomId: "",
       fromUnixTime,
       currentAssignment: { user: {}, chore: {} },
+      currentChore: { room: {} },
+      parseISO,
+      format,
     };
   },
   created: function() {
@@ -70,15 +83,9 @@ export default {
         this.chores = response.data;
       });
     },
-    showAssignment: function(assignment) {
-      this.currentAssignment = assignment;
-      document.querySelector("#assignment-details").showModal();
-    },
-    indexAssignments: function() {
-      axios.get("/api/assignments").then(response => {
-        console.log("asignments index", response);
-        this.assignments = response.data;
-      });
+    showChore: function(chore) {
+      this.currentChore = chore;
+      document.querySelector("#chore-details").showModal();
     },
     createChore: function() {
       var params = {
@@ -98,6 +105,35 @@ export default {
         })
         .catch(error => {
           console.log("chores create error", error.response);
+        });
+    },
+    showAssignment: function(assignment) {
+      this.currentAssignment = assignment;
+      document.querySelector("#assignment-details").showModal();
+    },
+    indexAssignments: function() {
+      axios.get("/api/assignments").then(response => {
+        console.log("asignments index", response);
+        this.assignments = response.data;
+      });
+    },
+    completeAssignment: function(assignment) {
+      const date = new Date();
+      const params = {
+        id: assignment.id,
+        chore_id: assignment.chore.id,
+        user_id: assignment.user.id,
+        due_date: assignment.due_date,
+        completed_date: date.toISOString(),
+        assigner_id: assignment.assigner_id,
+      };
+      axios
+        .patch("/api/assignments/" + assignment.id, params)
+        .then(response => {
+          console.log("assignments update", response);
+        })
+        .catch(error => {
+          console.log("assignments update error", error.response);
         });
     },
   },
