@@ -1,34 +1,35 @@
 <template>
-  <div class="home">
-    <AssignmentsList />
-    <ChoresList />
+  <div class="chores-list">
+    <h2>Assign A Chore</h2>
+    <div v-for="(chore, index) in chores" :key="index">
+      <p>Chore Name: {{ chore.title }}</p>
+      <p>Last Time Completed: {{ chore.last_completed }}</p>
+      <p>Room: {{ chore.room.name }}</p>
+      <button>Assign Chore</button>
+      <button v-on:click="showChore(chore)">More Info</button>
+      <br />
+      <dialog id="chore-details">
+        <form method="dialog">
+          <h1>Chore Info</h1>
+          <p>Chore Name: {{ chore.title }}</p>
+          <p>Description: {{ chore.desc }}</p>
+          <p>How often does the chore need to be done: {{ chore.frequency }} day(s)</p>
+          <p>Last Time Completed: {{ chore.last_completed }}</p>
+          <p>Earn: {{ chore.points_gain }} points</p>
+          <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
+          <p>Room: {{ chore.room.name }}</p>
+          <button>Close</button>
+        </form>
+      </dialog>
+      <p>-----------------------------------------</p>
+    </div>
   </div>
 </template>
 
-<style>
-body {
-  font-family: "Nunito", sans-serif;
-}
-</style>
-
 <script>
 import axios from "axios";
-// eslint-disable-next-line no-unused-vars
-import { fromUnixTime, parseISO, format, parseJSON } from "date-fns";
-import AssignmentsList from "../components/AssignmentsList";
-import ChoresList from "../components/ChoresList";
-
-const filters = {
-  all: assignments => assignments,
-  active: assignments => assignments.filter(assignment => !assignment.completed),
-  completed: assignments => assignments.filter(assignment => assignment.completed),
-};
 
 export default {
-  components: {
-    AssignmentsList,
-    ChoresList,
-  },
   data: function() {
     return {
       chores: [],
@@ -36,8 +37,6 @@ export default {
       assignments: [],
       currentAssignment: { user: {}, chore: {} },
       currentChore: { room: {} },
-      parseISO,
-      format,
       grabbedUser: {},
       completedAssignments: {},
       visibility: "active",
@@ -45,13 +44,7 @@ export default {
   },
   created: function() {
     this.indexChores();
-    this.indexAssignments();
     this.indexUsers();
-  },
-  computed: {
-    filteredAssignments: function() {
-      return filters[this.visibility](this.assignments);
-    },
   },
   methods: {
     indexChores: function() {
@@ -86,16 +79,6 @@ export default {
         .catch(error => {
           console.log("chores create error", error.response);
         });
-    },
-    showAssignment: function(assignment) {
-      this.currentAssignment = assignment;
-      document.querySelector("#assignment-details").showModal();
-    },
-    indexAssignments: function() {
-      axios.get("/api/assignments").then(response => {
-        console.log("asignments index", response);
-        this.assignments = response.data;
-      });
     },
     indexUsers: function() {
       axios.get("/api/users").then(response => {

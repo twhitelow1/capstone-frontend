@@ -1,10 +1,9 @@
 <template>
   <div class="assignments-show">
     <h1>Assignment Info</h1>
-    <p>Assigned To: {{ assignment }}</p>
-    <p>Chore: {{ assignment }}</p>
-    <p>Date Due: {{ assignment }}</p>
-    <p>Assigned By: {{ assignment }}</p>
+    <p>Assigned To: {{ assignment.user.first_name }}</p>
+    <p>Chore: {{ assignment.chore.title }}</p>
+    <p>Date Due: {{ assignment.date_due }}</p>
     <button>Back</button>
   </div>
 </template>
