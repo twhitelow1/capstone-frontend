@@ -2,16 +2,14 @@
   <div class="home">
     <h1>To Do List</h1>
     <a href="?completed=true">Completed</a>
-    <div v-for="assignment in filteredAssignments" :key="`assign-${assignment.id}`">
-      <p>Assigned To: {{ assignment.user.first_name }}</p>
-      <p>Chore: {{ assignment.chore.title }}</p>
-      <p>Date Due: {{ assignment.due_date }}</p>
-      <p>Is Completed?: {{ assignment.completed }}</p>
-      <p>Assigned By: {{ assignment.assigner_id }}</p>
-      <input class="toggle" type="checkbox" v-model="assignment.completed" />
-      <button v-on:click="showAssignment(assignment)">More Info</button>
-      <p>-----------------------------------------</p>
-    </div>
+    <ul class="todo-list">
+      <li v-for="assignment in filteredAssignments" class="todo" :key="`assign-${assignment.id}`">
+        <input class="toggle" type="checkbox" v-model="assignment.completed" />
+        <label @click="showAssignment(assignment)">{{ `${assignment.chore.title} ` }}</label>
+        | Assigned To: {{ assignment.user.first_name }}
+        <p>-----------------------------------------</p>
+      </li>
+    </ul>
     <dialog id="assignment-details">
       <form method="dialog">
         <h1>Assignment Info</h1>
@@ -43,12 +41,19 @@
           <button>Close</button>
         </form>
       </dialog>
-      <p>-----------------------------------------</p>
     </div>
   </div>
 </template>
 
-<style></style>
+<style>
+li {
+  list-style: none;
+  border: 1px solid rgb(126, 126, 126);
+  background-color: rgb(240, 240, 240);
+  margin: auto;
+  max-width: 1000px;
+}
+</style>
 
 <script>
 import axios from "axios";
