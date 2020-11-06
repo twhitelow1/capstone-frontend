@@ -2,13 +2,13 @@
   <div class="home">
     <h1>To Do List</h1>
     <a href="?completed=true">Completed</a>
-    <div v-for="assignment in assignments" :key="`assign-${assignment.id}`">
+    <div v-for="assignment in filteredAssignments" :key="`assign-${assignment.id}`">
       <p>Assigned To: {{ assignment.user.first_name }}</p>
       <p>Chore: {{ assignment.chore.title }}</p>
-      <p>Date Due: {{ format(parseISO(assignment.due_date), "MM/dd/yyyy") }}</p>
+      <p>Date Due: {{ assignment.due_date }}</p>
       <p>Is Completed?: {{ assignment.completed }}</p>
       <p>Assigned By: {{ assignment.assigner_id }}</p>
-      <button v-on:click="completeAssignment(assignment)">Complete</button>
+      <input class="toggle" type="checkbox" v-model="assignment.completed" />
       <button v-on:click="showAssignment(assignment)">More Info</button>
       <p>-----------------------------------------</p>
     </div>
@@ -55,6 +55,12 @@ import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import { fromUnixTime, parseISO, format, parseJSON } from "date-fns";
 
+const filters = {
+  all: assignments => assignments,
+  active: assignments => assignments.filter(assignment => !assignment.completed),
+  completed: assignments => assignments.filter(assignment => assignment.completed),
+};
+
 export default {
   data: function() {
     return {
@@ -74,12 +80,19 @@ export default {
       parseISO,
       format,
       grabbedUser: {},
+      completedAssignments: {},
+      visibility: "active",
     };
   },
   created: function() {
     this.indexChores();
     this.indexAssignments();
     this.indexUsers();
+  },
+  computed: {
+    filteredAssignments: function() {
+      return filters[this.visibility](this.assignments);
+    },
   },
   methods: {
     indexChores: function() {
@@ -91,6 +104,9 @@ export default {
     showChore: function(chore) {
       this.currentChore = chore;
       document.querySelector("#chore-details").showModal();
+    },
+    getCompletedAssignments: function() {
+      this.indexAssignments();
     },
     createChore: function() {
       var params = {
@@ -121,27 +137,6 @@ export default {
         console.log("asignments index", response);
         this.assignments = response.data;
       });
-    },
-    completeAssignment: function(assignment) {
-      const date = new Date();
-      const params = {
-        id: assignment.id,
-        chore_id: assignment.chore.id,
-        user_id: assignment.user.id,
-        due_date: assignment.due_date,
-        completed_date: date.toISOString(),
-        completed: true,
-        assigner_id: assignment.assigner_id,
-      };
-      axios
-        .patch("/api/assignments/" + assignment.id, params)
-        .then(response => {
-          console.log("assignments update", response);
-        })
-        .catch(error => {
-          console.log("assignments update error", error.response);
-        });
-      this.indexAssignments();
     },
     indexUsers: function() {
       axios.get("/api/users").then(response => {
