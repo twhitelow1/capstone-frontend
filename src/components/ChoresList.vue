@@ -2,7 +2,7 @@
   <div class="chores-list">
     <h2>Assign A Chore</h2>
     <b-container fluid>
-      <b-row>
+      <b-row align-h="center">
         <b-card v-for="(chore, index) in chores" :key="index">
           <p>Chore Name: {{ chore.title }}</p>
           <p>Last Time Completed: {{ chore.last_completed }}</p>
@@ -27,6 +27,20 @@
     </b-container>
   </div>
 </template>
+
+<style scoped>
+.chores-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.chores-list .card {
+  margin: 0.5em;
+}
+.chores-list h2 {
+  text-align: center;
+}
+</style>
 
 <script>
 import axios from "axios";

@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <b-container fluid>
+    <b-container fluid="xl">
       <b-row>
-        <b-col>
+        <b-col lg="8">
           <AssignmentsList />
         </b-col>
         <b-col>

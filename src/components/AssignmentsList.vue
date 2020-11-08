@@ -34,11 +34,12 @@
 
 <style>
 .assignment-list {
-  max-width: 800px;
+  /* max-width: 800px; */
   margin: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 0;
 }
 a.filter-link {
   cursor: pointer;
