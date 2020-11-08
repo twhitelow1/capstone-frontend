@@ -12,9 +12,7 @@ body {
 </style>
 
 <script>
-import axios from "axios";
-// eslint-disable-next-line no-unused-vars
-import { fromUnixTime, parseISO, format, parseJSON } from "date-fns";
+import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
 import ChoresList from "../components/ChoresList";
 
@@ -40,13 +38,14 @@ export default {
       format,
       grabbedUser: {},
       completedAssignments: {},
-      visibility: "active",
+      visibility: this.checkVisibility(),
     };
   },
   created: function() {
-    this.indexChores();
-    this.indexAssignments();
-    this.indexUsers();
+    this.checkVisibility();
+  },
+  mounted: function() {
+    this.checkVisibility();
   },
   computed: {
     filteredAssignments: function() {
@@ -54,54 +53,12 @@ export default {
     },
   },
   methods: {
-    indexChores: function() {
-      axios.get("/api/chores").then(response => {
-        console.log("chores index", response);
-        this.chores = response.data;
-      });
-    },
-    showChore: function(chore) {
-      this.currentChore = chore;
-      document.querySelector("#chore-details").showModal();
-    },
-    getCompletedAssignments: function() {
-      this.indexAssignments();
-    },
-    createChore: function() {
-      var params = {
-        title: this.newChoreTitle,
-        desc: this.newChoreDesc,
-        frequency: this.newChoreFrequency,
-        last_completed: this.newChoreLastCompleted,
-        points_gain: this.newChorePointsGain,
-        points_price: this.newChorePointsPrice,
-        room_id: this.newChoreRoomId,
-      };
-      axios
-        .post("/api/chores", params)
-        .then(response => {
-          this.$router.push("/chores");
-          console.log("chores create", response);
-        })
-        .catch(error => {
-          console.log("chores create error", error.response);
-        });
-    },
-    showAssignment: function(assignment) {
-      this.currentAssignment = assignment;
-      document.querySelector("#assignment-details").showModal();
-    },
-    indexAssignments: function() {
-      axios.get("/api/assignments").then(response => {
-        console.log("asignments index", response);
-        this.assignments = response.data;
-      });
-    },
-    indexUsers: function() {
-      axios.get("/api/users").then(response => {
-        console.log("users index", response);
-        this.users = response.data;
-      });
+    checkVisibility: function() {
+      console.log(`my params: ${this.$route.query.visibility}`);
+      if (this.$route.query.visibility) {
+        this.visibility = this.$route.query.visibility;
+      }
+      console.log(`set visibility: ${this.visibility}`);
     },
   },
 };

@@ -1,13 +1,12 @@
 <template>
   <div class="chores-list">
     <h2>Assign A Chore</h2>
-    <div v-for="(chore, index) in chores" :key="index">
+    <b-card v-for="(chore, index) in chores" :key="index">
       <p>Chore Name: {{ chore.title }}</p>
       <p>Last Time Completed: {{ chore.last_completed }}</p>
       <p>Room: {{ chore.room.name }}</p>
-      <button>Assign Chore</button>
-      <button v-on:click="showChore(chore)">More Info</button>
-      <br />
+      <b-button>Assign Chore</b-button>
+      <b-button v-on:click="showChore(chore)">More Info</b-button>
       <dialog id="chore-details">
         <form method="dialog">
           <h1>Chore Info</h1>
@@ -18,11 +17,11 @@
           <p>Earn: {{ chore.points_gain }} points</p>
           <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
           <p>Room: {{ chore.room.name }}</p>
-          <button>Close</button>
+          <b-button>Close</b-button>
         </form>
       </dialog>
       <p>-----------------------------------------</p>
-    </div>
+    </b-card>
   </div>
 </template>
 
@@ -34,11 +33,9 @@ export default {
     return {
       chores: [],
       users: [],
-      assignments: [],
       currentAssignment: { user: {}, chore: {} },
       currentChore: { room: {} },
       grabbedUser: {},
-      completedAssignments: {},
       visibility: "active",
     };
   },
