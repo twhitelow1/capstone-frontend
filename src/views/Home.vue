@@ -1,7 +1,15 @@
 <template>
   <div class="home">
-    <AssignmentsList />
-    <ChoresList />
+    <b-container fluid>
+      <b-row>
+        <b-col>
+          <AssignmentsList />
+        </b-col>
+        <b-col>
+          <ChoresList />
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
