@@ -1,15 +1,20 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>
-      |
-      <router-link to="/about">About</router-link>
-      |
-      <router-link to="/signup">Signup</router-link>
-      |
-      <router-link to="/login">Login</router-link>
-      |
-      <router-link to="/logout">Logout</router-link>
+      <b-navbar toggleable="lg" type="dark">
+        <b-navbar-brand href="/">Home</b-navbar-brand>
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item href="/">Home</b-nav-item>
+            <b-nav-item href="/about">About</b-nav-item>
+            <b-nav-item href="/signup">Signup</b-nav-item>
+            <b-nav-item href="/login">Login</b-nav-item>
+            <b-nav-item href="/logout">Logout</b-nav-item>
+          </b-navbar-nav>
+        </b-collapse>
+      </b-navbar>
     </div>
     <router-view />
   </div>

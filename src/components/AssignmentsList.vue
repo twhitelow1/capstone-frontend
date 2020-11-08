@@ -34,7 +34,7 @@
 
 <style>
 .assignment-list {
-  max-width: 500px;
+  max-width: 800px;
   margin: auto;
   display: flex;
   flex-direction: column;

@@ -1,27 +1,30 @@
 <template>
   <div class="chores-list">
     <h2>Assign A Chore</h2>
-    <b-card v-for="(chore, index) in chores" :key="index">
-      <p>Chore Name: {{ chore.title }}</p>
-      <p>Last Time Completed: {{ chore.last_completed }}</p>
-      <p>Room: {{ chore.room.name }}</p>
-      <b-button>Assign Chore</b-button>
-      <b-button v-on:click="showChore(chore)">More Info</b-button>
-      <dialog id="chore-details">
-        <form method="dialog">
-          <h1>Chore Info</h1>
+    <b-container fluid>
+      <b-row>
+        <b-card v-for="(chore, index) in chores" :key="index">
           <p>Chore Name: {{ chore.title }}</p>
-          <p>Description: {{ chore.desc }}</p>
-          <p>How often does the chore need to be done: {{ chore.frequency }} day(s)</p>
           <p>Last Time Completed: {{ chore.last_completed }}</p>
-          <p>Earn: {{ chore.points_gain }} points</p>
-          <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
           <p>Room: {{ chore.room.name }}</p>
-          <b-button>Close</b-button>
-        </form>
-      </dialog>
-      <p>-----------------------------------------</p>
-    </b-card>
+          <b-button>Assign Chore</b-button>
+          <b-button v-on:click="showChore(chore)">More Info</b-button>
+          <dialog id="chore-details">
+            <form method="dialog">
+              <h1>Chore Info</h1>
+              <p>Chore Name: {{ chore.title }}</p>
+              <p>Description: {{ chore.desc }}</p>
+              <p>How often does the chore need to be done: {{ chore.frequency }} day(s)</p>
+              <p>Last Time Completed: {{ chore.last_completed }}</p>
+              <p>Earn: {{ chore.points_gain }} points</p>
+              <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
+              <p>Room: {{ chore.room.name }}</p>
+              <b-button>Close</b-button>
+            </form>
+          </dialog>
+        </b-card>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
