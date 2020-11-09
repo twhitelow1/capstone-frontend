@@ -1,15 +1,15 @@
 <template>
   <div class="home">
-    <b-container fluid="xl">
-      <b-row>
-        <b-col lg="8">
+    <mdb-container fluid>
+      <mdb-row>
+        <mdb-col sm="8">
           <AssignmentsList />
-        </b-col>
-        <b-col>
+        </mdb-col>
+        <mdb-col>
           <ChoresList />
-        </b-col>
-      </b-row>
-    </b-container>
+        </mdb-col>
+      </mdb-row>
+    </mdb-container>
   </div>
 </template>
 
@@ -23,6 +23,7 @@ body {
 import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
 import ChoresList from "../components/ChoresList";
+import { mdbContainer, mdbRow, mdbCol } from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -34,6 +35,9 @@ export default {
   components: {
     AssignmentsList,
     ChoresList,
+    mdbContainer,
+    mdbRow,
+    mdbCol,
   },
   data: function() {
     return {

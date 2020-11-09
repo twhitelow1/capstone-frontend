@@ -1,24 +1,27 @@
 <template>
   <div id="app">
-    <b-navbar toggleable="lg" type="dark" variant="dark" sticky="true">
-      <b-navbar-brand href="/">Chore Tracker</b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item href="/">Home</b-nav-item>
-          <b-nav-item href="/about">About</b-nav-item>
-          <b-nav-item href="/signup">Signup</b-nav-item>
-          <b-nav-item href="/login">Login</b-nav-item>
-          <b-nav-item href="/logout">Logout</b-nav-item>
-        </b-navbar-nav>
-      </b-collapse>
-    </b-navbar>
+    <mdb-navbar color="teal" class="mt-2 lighten-4" hamburger navIconClass="dark-teal-text" expand="xl">
+      <mdb-navbar-brand href="/">Chore Tracker</mdb-navbar-brand>
+      <mdb-navbar-toggler target="nav-collapse">
+        <mdb-navbar-nav right>
+          <mdb-nav-item href="/" waves-fixed>Home</mdb-nav-item>
+          <mdb-nav-item href="/about" waves-fixed>About</mdb-nav-item>
+          <mdb-nav-item href="/signup" waves-fixed>Signup</mdb-nav-item>
+          <mdb-nav-item href="/login" waves-fixed>Login</mdb-nav-item>
+          <mdb-nav-item href="/logout" waves-fixed>Logout</mdb-nav-item>
+        </mdb-navbar-nav>
+      </mdb-navbar-toggler>
+    </mdb-navbar>
     <router-view />
   </div>
 </template>
 
-<style>
+<style lang="scss">
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+
+$image-path: "~@/../mdb/mdbvue/img";
+@import "~@/../mdb/mdbvue/scss/mdb-free.scss";
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -40,3 +43,17 @@
   color: #42b983;
 }
 </style>
+
+<script>
+import { mdbNavbar, mdbNavItem, mdbNavbarNav, mdbNavbarToggler, mdbNavbarBrand } from "mdbvue";
+
+export default {
+  components: {
+    mdbNavbar,
+    mdbNavItem,
+    mdbNavbarNav,
+    mdbNavbarToggler,
+    mdbNavbarBrand,
+  },
+};
+</script>

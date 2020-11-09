@@ -13,22 +13,27 @@
           <input class="toggle" type="checkbox" v-model="assignment.completed" />
           <span class="checkmark"></span>
         </label>
-        <label @click="showAssignment(assignment)" class="complete-box">
+        <label @click="modal = true" class="complete-box">
           Assigned To: {{ assignment.user.first_name }} | Chore: {{ assignment.chore.title }}
         </label>
       </li>
     </ul>
-    <dialog id="assignment-details">
-      <form method="dialog">
-        <h1>Assignment Info</h1>
+    <mdb-modal :show="modal" @close="modal = false">
+      <mdb-modal-header>
+        <mdb-modal-title>Assignment Info</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-body>
         <p>Assigned To: {{ currentAssignment.user.first_name }}</p>
         <p>Chore: {{ currentAssignment.chore.title }}</p>
         <p>Date Due: {{ parseISO(currentAssignment.due_date) }}</p>
         <p>Is Completed?: {{ currentAssignment.completed }}</p>
         <p>Assigned By: {{ currentAssignment.assigner_id }}</p>
-        <button>Close</button>
-      </form>
-    </dialog>
+      </mdb-modal-body>
+      <mdb-modal-footer>
+        <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+        <mdb-btn color="primary">Save changes</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
   </div>
 </template>
 
@@ -131,6 +136,7 @@ li {
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import { parseISO, parseJSON } from "date-fns";
+import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn } from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -139,6 +145,14 @@ const filters = {
 };
 
 export default {
+  components: {
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbBtn,
+  },
   data: function() {
     return {
       users: [],
@@ -149,6 +163,7 @@ export default {
       grabbedUser: {},
       completedAssignments: {},
       visibility: "active",
+      modal: false,
     };
   },
   created: function() {
