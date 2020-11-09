@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <mdb-container fluid>
+    <div class="main-container">
       <mdb-row>
+        <mdb-col>
+          <LeftNavigation />
+        </mdb-col>
         <mdb-col sm="8">
           <AssignmentsList />
         </mdb-col>
@@ -9,7 +12,7 @@
           <ChoresList />
         </mdb-col>
       </mdb-row>
-    </mdb-container>
+    </div>
   </div>
 </template>
 
@@ -17,13 +20,20 @@
 body {
   font-family: "Nunito", sans-serif;
 }
+
+.main-container {
+  padding: 50px 0px;
+  width: 100%;
+  margin: 0;
+}
 </style>
 
 <script>
 import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
 import ChoresList from "../components/ChoresList";
-import { mdbContainer, mdbRow, mdbCol } from "mdbvue";
+import LeftNavigation from "../components/LeftNavigation";
+import { mdbRow, mdbCol } from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -35,9 +45,10 @@ export default {
   components: {
     AssignmentsList,
     ChoresList,
-    mdbContainer,
+    // mdbContainer,
     mdbRow,
     mdbCol,
+    LeftNavigation,
   },
   data: function() {
     return {

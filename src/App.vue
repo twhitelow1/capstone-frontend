@@ -1,17 +1,6 @@
 <template>
   <div id="app">
-    <mdb-navbar color="teal" class="mt-2 lighten-4" hamburger navIconClass="dark-teal-text" expand="xl">
-      <mdb-navbar-brand href="/">Chore Tracker</mdb-navbar-brand>
-      <mdb-navbar-toggler target="nav-collapse">
-        <mdb-navbar-nav right>
-          <mdb-nav-item href="/" waves-fixed>Home</mdb-nav-item>
-          <mdb-nav-item href="/about" waves-fixed>About</mdb-nav-item>
-          <mdb-nav-item href="/signup" waves-fixed>Signup</mdb-nav-item>
-          <mdb-nav-item href="/login" waves-fixed>Login</mdb-nav-item>
-          <mdb-nav-item href="/logout" waves-fixed>Logout</mdb-nav-item>
-        </mdb-navbar-nav>
-      </mdb-navbar-toggler>
-    </mdb-navbar>
+    <TopNav />
     <router-view />
   </div>
 </template>
@@ -28,6 +17,7 @@ $image-path: "~@/../mdb/mdbvue/img";
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding: 0;
 }
 
 #nav {
@@ -45,15 +35,11 @@ $image-path: "~@/../mdb/mdbvue/img";
 </style>
 
 <script>
-import { mdbNavbar, mdbNavItem, mdbNavbarNav, mdbNavbarToggler, mdbNavbarBrand } from "mdbvue";
+import TopNav from "./components/TopNav";
 
 export default {
   components: {
-    mdbNavbar,
-    mdbNavItem,
-    mdbNavbarNav,
-    mdbNavbarToggler,
-    mdbNavbarBrand,
+    TopNav,
   },
 };
 </script>
