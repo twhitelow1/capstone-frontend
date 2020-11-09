@@ -1,11 +1,13 @@
 <template>
-  <div class="assignments-list">
+  <div class="assignments-list pt-5">
     <h1>To Do List</h1>
     <a class="filter-link" @click="changeVisibility('all')">All</a>
     |
     <a class="filter-link" @click="changeVisibility('active')">Active</a>
     |
     <a class="filter-link" @click="changeVisibility('completed')">Completed</a>
+
+    <mdb-datatable :data="tableData" striped bordered />
 
     <ul class="assignment-list">
       <li v-for="assignment in filteredAssignments" class="assignment" :key="`assign-${assignment.id}`">
@@ -136,7 +138,7 @@ li {
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import { parseISO, parseJSON } from "date-fns";
-import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn } from "mdbvue";
+import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn, mdbDatatable } from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -152,6 +154,7 @@ export default {
     mdbModalBody,
     mdbModalFooter,
     mdbBtn,
+    mdbDatatable,
   },
   data: function() {
     return {
@@ -164,11 +167,22 @@ export default {
       completedAssignments: {},
       visibility: "active",
       modal: false,
+      tableData: {
+        columns: [
+          {
+            label: "name",
+            field: "user",
+            sort: "asc",
+          },
+        ],
+        rows: this.assignments,
+      },
     };
   },
   created: function() {
     this.indexAssignments();
     this.indexUsers();
+    console.log(this.assignments);
   },
   computed: {
     filteredAssignments: function() {
@@ -176,6 +190,13 @@ export default {
     },
   },
   methods: {
+    tableAssignments: function() {
+      const result = [];
+      this.assignments.each(assignment => {
+        result.push(assignment.user.first_name);
+      });
+      result;
+    },
     getCompletedAssignments: function() {
       this.indexAssignments();
     },

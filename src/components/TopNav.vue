@@ -1,5 +1,13 @@
 <template>
-  <mdb-navbar color="teal" class="lighten-4 top-nav" hamburger navIconClass="dark-teal-text" expand="xl" position="top">
+  <mdb-navbar
+    color="unique-color-dark"
+    class="lighten-4 top-nav"
+    hamburger
+    navIconClass="light-teal-text"
+    expand="xl"
+    position="top"
+    dark
+  >
     <mdb-navbar-brand href="/">Chore Tracker</mdb-navbar-brand>
     <mdb-navbar-toggler target="nav-collapse">
       <mdb-navbar-nav right>

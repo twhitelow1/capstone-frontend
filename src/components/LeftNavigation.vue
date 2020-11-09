@@ -1,6 +1,16 @@
 <template>
-  <div class="left-navigation">
-    <p></p>
+  <div class="left-navigation pt-3">
+    <div>
+      <img src="https://via.placeholder.com/150" alt="user image" />
+      <h2>Todd Whitelow</h2>
+      <p>2801 Basingdale</p>
+      <p>Points: 5000</p>
+    </div>
+    <br />
+    <div>
+      <p>Home Settings</p>
+      <p>Recent Tasks Completed</p>
+    </div>
   </div>
 </template>
 

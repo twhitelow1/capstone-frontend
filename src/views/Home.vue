@@ -2,13 +2,13 @@
   <div class="home">
     <div class="main-container">
       <mdb-row>
-        <mdb-col>
+        <mdb-col lg="2">
           <LeftNavigation />
         </mdb-col>
-        <mdb-col sm="8">
+        <mdb-col lg="7">
           <AssignmentsList />
         </mdb-col>
-        <mdb-col>
+        <mdb-col style="padding:0px;">
           <ChoresList />
         </mdb-col>
       </mdb-row>
@@ -20,10 +20,13 @@
 body {
   font-family: "Nunito", sans-serif;
 }
-
+.col {
+  padding: 0;
+}
 .main-container {
   padding: 50px 0px;
   width: 100%;
+  max-width: 100vw;
   margin: 0;
 }
 </style>
@@ -45,7 +48,6 @@ export default {
   components: {
     AssignmentsList,
     ChoresList,
-    // mdbContainer,
     mdbRow,
     mdbCol,
     LeftNavigation,

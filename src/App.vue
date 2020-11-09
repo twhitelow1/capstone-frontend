@@ -18,6 +18,7 @@ $image-path: "~@/../mdb/mdbvue/img";
   text-align: center;
   color: #2c3e50;
   padding: 0;
+  max-width: 100vw;
 }
 
 #nav {

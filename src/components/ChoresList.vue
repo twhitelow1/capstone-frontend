@@ -1,9 +1,9 @@
 <template>
-  <div class="chores-list">
+  <div class="chores-list pt-3">
     <h2>Assign A Chore</h2>
-    <mdb-container fluid>
+    <div>
       <mdb-row align-h="center">
-        <mdb-col>
+        <mdb-col class="chore-col">
           <mdb-card v-for="(chore, index) in chores" :key="index">
             <p>Chore Name: {{ chore.title }}</p>
             <p>Last Time Completed: {{ chore.last_completed }}</p>
@@ -45,7 +45,7 @@
           </mdb-card>
         </mdb-col>
       </mdb-row>
-    </mdb-container>
+    </div>
   </div>
 </template>
 
@@ -55,8 +55,12 @@
   flex-direction: column;
   justify-content: center;
 }
+.chore-col {
+  padding: 0;
+}
 .chores-list .card {
-  margin: 0.5em;
+  padding: 0.5em;
+  margin: 1em;
 }
 .chores-list h2 {
   text-align: center;
@@ -73,7 +77,6 @@ import {
   mdbModalFooter,
   mdbBtn,
   mdbCard,
-  mdbContainer,
   mdbRow,
   mdbCol,
 } from "mdbvue";
@@ -87,7 +90,6 @@ export default {
     mdbModalFooter,
     mdbBtn,
     mdbCard,
-    mdbContainer,
     mdbRow,
     mdbCol,
   },
