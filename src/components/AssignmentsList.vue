@@ -42,10 +42,10 @@
             <mdb-tbl-head>
               <tr>
                 <th>
-                  <div class="custom-control custom-checkbox">
+                  <!-- <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1" />
                     <label class="custom-control-label" for="tableDefaultCheck1"></label>
-                  </div>
+                  </div> -->
                 </th>
                 <th class="th-lg">Chore Title</th>
                 <th class="th-lg">Assigned To</th>
@@ -54,12 +54,7 @@
             </mdb-tbl-head>
 
             <mdb-tbl-body>
-              <tr
-                v-for="assignment in filteredAssignments"
-                :key="`assign-${assignment.id}`"
-                scope="row"
-                @click="modal = true"
-              >
+              <tr v-for="assignment in filteredAssignments" :key="`assign-${assignment.id}`" scope="row">
                 <th scope="row">
                   <div class="custom-control custom-checkbox">
                     <input
