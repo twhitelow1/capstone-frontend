@@ -1,6 +1,6 @@
 <template>
-  <mdb-row class="home">
-    <mdb-col lg="2">
+  <mdb-row class="home m-0">
+    <mdb-col lg="2" class="p-0 mr-5">
       <LeftNavigation />
     </mdb-col>
     <mdb-col lg="9">
