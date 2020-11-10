@@ -6,12 +6,15 @@
         class="view view-cascade gradient-card-header unique-color-dark narrower p-3 mx-0 mb-3 d-flex justify-content-between align-items-center"
       >
         <div>
-          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-            <i class="fas fa-th-large mt-0"></i>
-          </button>
-          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+          <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
+            <span slot="tip">Add A New Assignment</span>
+            <button slot="reference" type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+              <i class="fas fa-plus mt-0"></i>
+            </button>
+          </mdb-tooltip>
+          <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
             <i class="fas fa-columns mt-0"></i>
-          </button>
+          </button> -->
         </div>
         <div class="flex-column text-white">
           <a href="" class="white-text mx-3 h4">Current Chores Assigned</a>
@@ -42,13 +45,14 @@
             <mdb-tbl-head>
               <tr>
                 <th>
-                  <!-- <div class="custom-control custom-checkbox">
+                  <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1" />
                     <label class="custom-control-label" for="tableDefaultCheck1"></label>
-                  </div> -->
+                  </div>
                 </th>
                 <th class="th-lg">Chore Title</th>
                 <th class="th-lg">Assigned To</th>
+                <th class="th-lg">Room</th>
                 <th class="th-lg">Date Due</th>
               </tr>
             </mdb-tbl-head>
@@ -57,17 +61,13 @@
               <tr v-for="assignment in filteredAssignments" :key="`assign-${assignment.id}`" scope="row">
                 <th scope="row">
                   <div class="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      class="custom-control-input"
-                      id="tableDefaultCheck1"
-                      v-model="assignment.completed"
-                    />
-                    <label class="custom-control-label" for="tableDefaultCheck1"></label>
+                    <input type="checkbox" class="custom-control-input" :id="`ck${assignment.id}`" />
+                    <label class="custom-control-label" :for="`ck${assignment.id}`"></label>
                   </div>
                 </th>
                 <td>{{ assignment.choreTitle }}</td>
                 <td>{{ assignment.first_name }}</td>
+                <td>{{ assignment.room }}</td>
                 <td>{{ format(new Date(assignment.jsDate), "MM/dd/yyyy") }}</td>
               </tr>
             </mdb-tbl-body>
@@ -206,6 +206,7 @@ import {
   mdbTbl,
   mdbTblHead,
   mdbTblBody,
+  mdbTooltip,
 } from "mdbvue";
 
 const filters = {
@@ -225,6 +226,7 @@ export default {
     mdbTbl,
     mdbTblHead,
     mdbTblBody,
+    mdbTooltip,
   },
   data: function() {
     return {
