@@ -4,20 +4,22 @@
       <img
         src="https://todd.whitelow.tech/img/todd-face-square.png"
         alt="user profile image"
-        class="img-fluid z-index mb-3 rounded-circle profile hoverable
-        "
+        class="img-fluid z-index mb-3 rounded-circle profile hoverable"
       />
-      <h2>Todd Whitelow</h2>
-      <p>Points: 5000</p>
+      <h1 class="h1-responsive pb-2">Todd Whitelow</h1>
+      <h3 class="h3-responsive ">
+        Points:
+        <span class="text-dark">5000</span>
+      </h3>
     </div>
     <br />
     <div id="home-info">
-      <h4 class="h4">Home Information</h4>
-      <mdb-row class="py-2 px-3">
-        <mdb-col col="2">
-          <i class="fas fa-location-arrow fa-2x" alt="Address Icon" />
+      <h5 class="h5-responsive">Home Information</h5>
+      <mdb-row class="py-2 px-2">
+        <mdb-col col="4">
+          <i class="fas fa-location-arrow fa-2x pl-5" alt="Address Icon" />
         </mdb-col>
-        <mdb-col col="10">
+        <mdb-col col="8">
           <p>
             2801 Basingdale
             <br />
@@ -26,11 +28,42 @@
         </mdb-col>
       </mdb-row>
       <div class="px-4">
-        <h6 class="h6">Household Memebers</h6>
-        <ul class="text-left">
-          <li>Kiya</li>
-          <li>Jason</li>
-        </ul>
+        <h5 class="h5-responsive">Household Memebers</h5>
+        <div class="text-left flex-row">
+          <mdb-card class="my-3">
+            <div class="row p-2 align-items-center">
+              <div class="col">
+                <img
+                  src="https://todd.whitelow.tech/img/todd-face-square.png"
+                  class="img-fluid justify-content-center z-index mb-3 rounded-circle profile hoverable"
+                  style="max-width:100%;"
+                />
+              </div>
+              <div class="col-8">
+                <h4 class="h4-responsive mb-1">Kiya Law</h4>
+                <h6 class="h6-responsive">(555) 555 - 5555</h6>
+                <h6 class="h6-responsive">2300 Points</h6>
+              </div>
+            </div>
+          </mdb-card>
+          <mdb-card class="my-3">
+            <div class="row p-2 align-items-center">
+              <div class="col">
+                <img
+                  src="https://todd.whitelow.tech/img/todd-face-square.png"
+                  class="img-fluid justify-content-center mt-2 z-index mb-3 rounded-circle profile hoverable"
+                  style="max-width:100%;"
+                />
+              </div>
+              <div class="col-8">
+                <h4 class="h4-responsive mb-1">Jason Grant</h4>
+                <h6 class="h6-responsive">(555) 555 - 5555</h6>
+                <h6 class="h6-responsive">4000 Points</h6>
+
+              </div>
+            </div>
+          </mdb-card>
+        </div>
       </div>
     </div>
   </div>
@@ -62,12 +95,13 @@ img.profile {
 </style>
 
 <script>
-import { mdbRow, mdbCol } from "mdbvue";
+import { mdbRow, mdbCol, mdbCard } from "mdbvue";
 
 export default {
   components: {
     mdbRow,
     mdbCol,
+    mdbCard,
   },
 };
 </script>

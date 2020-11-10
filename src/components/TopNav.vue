@@ -8,7 +8,7 @@
     position="top"
     dark
   >
-    <mdb-navbar-brand>Chore Tracker</mdb-navbar-brand>
+    <mdb-navbar-brand class="">Chore Tracker</mdb-navbar-brand>
     <mdb-navbar-toggler target="nav-collapse">
       <mdb-navbar-nav right>
         <mdb-nav-item href="/" waves-fixed>Dashboard</mdb-nav-item>
