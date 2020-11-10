@@ -1,6 +1,6 @@
 <template>
   <mdb-row class="home m-0 grey lighten-3" style="min-height:inherit;">
-    <mdb-col lg="2" class="p-0 mr-5">
+    <mdb-col lg="2" class="p-0">
       <LeftNavigation />
     </mdb-col>
     <mdb-col lg="9">
