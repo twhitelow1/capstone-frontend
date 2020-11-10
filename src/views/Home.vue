@@ -1,15 +1,12 @@
 <template>
-  <div class="home">
+  <mdb-row class="home">
     <mdb-col lg="2">
       <LeftNavigation />
     </mdb-col>
     <mdb-col lg="9">
       <AssignmentsList />
     </mdb-col>
-    <!-- <mdb-col style="padding:0px;">
-          <ChoresList />
-        </mdb-col> -->
-  </div>
+  </mdb-row>
 </template>
 
 <style>
@@ -32,7 +29,7 @@ import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
 // import ChoresList from "../components/ChoresList";
 import LeftNavigation from "../components/LeftNavigation";
-import { mdbCol } from "mdbvue";
+import { mdbCol, mdbRow } from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -45,6 +42,7 @@ export default {
     AssignmentsList,
     // ChoresList,
     mdbCol,
+    mdbRow,
     LeftNavigation,
   },
   data: function() {
