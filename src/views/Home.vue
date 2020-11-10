@@ -1,5 +1,5 @@
 <template>
-  <mdb-row class="home m-0 grey lighten-3">
+  <mdb-row class="home m-0 grey lighten-3" style="min-height:inherit;">
     <mdb-col lg="2" class="p-0 mr-5">
       <LeftNavigation />
     </mdb-col>
@@ -17,10 +17,11 @@ body {
   padding: 0;
 }
 .main-container {
-  padding: 50px 0px;
+  padding: 50px 0px 0px 0px;
   width: 100%;
   max-width: 100vw;
   margin: 0;
+  min-height: 100vh;
 }
 </style>
 

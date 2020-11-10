@@ -1,7 +1,12 @@
 <template>
   <div class="left-navigation pt-3 grey lighten-5">
     <div>
-      <img src="https://via.placeholder.com/150" alt="user profile image" class="img-fluid mb-4 rounded-circle" />
+      <img
+        src="https://todd.whitelow.tech/img/todd-face-square.png"
+        alt="user profile image"
+        class="img-fluid z-index mb-3 rounded-circle profile hoverable
+        "
+      />
       <h2>Todd Whitelow</h2>
       <p>Points: 5000</p>
     </div>
@@ -26,6 +31,10 @@
 .left-navigation {
   height: 100%;
   margin: 0;
+}
+
+img.profile {
+  max-width: 70%;
 }
 
 .left-navigation p {
