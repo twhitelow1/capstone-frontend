@@ -2,7 +2,7 @@
   <div>
     <!-- Add  modal form from mdb here instead -->
     <mdb-modal :show="addNewModal" @close="addNewModal = false" cascade>
-      <mdb-modal-header class="unique-color-dark white-text">
+      <mdb-modal-header class="default-color-dark white-text">
         <h4 class="title">
           <i class="fas fa-plus" />
           Assign A Chore
@@ -54,7 +54,8 @@
     </mdb-modal>
     <!--Card image-->
     <div
-      class="view view-cascade gradient-card-header unique-color-dark narrower p-3 mx-0 mb-3 d-flex justify-content-between align-items-center"
+      class="view view-cascade default-color-dark narrower w-100 p-3 mx-0 mb-3 d-flex justify-content-between align-items-center"
+      style="border-radius:5px 5px 0 0;"
     >
       <div>
         <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
