@@ -1,5 +1,5 @@
 <template>
-  <mdb-row class="home m-0 grey lighten-3" style="min-height:inherit;">
+  <mdb-row class="home m-0 grey lighten-2" style="min-height:inherit;">
     <mdb-col sm="3" class="p-0">
       <LeftNavigation />
     </mdb-col>

@@ -5,8 +5,9 @@
         src="https://todd.whitelow.tech/img/todd-face-square.png"
         alt="user profile image"
         class="img-fluid z-index mb-3 rounded-circle profile hoverable"
+        style="max-width:70%"
       />
-      <h1 class="h1-responsive pb-2">Todd Whitelow</h1>
+      <h2 class="h2-responsive pb-2">Todd Whitelow</h2>
       <h3 class="h3-responsive ">
         Points:
         <span class="text-dark">5000</span>
