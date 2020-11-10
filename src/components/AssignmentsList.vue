@@ -1,7 +1,7 @@
 <template>
   <div class="assignments-list pt-5">
     <div class="card card-cascade narrower">
-      <AssignmentsTableHeader />
+      <AssignmentsTableHeader v-bind:chores="chores" />
       <div class="px-4">
         <div class="table-wrapper">
           <!--Table-->
@@ -191,6 +191,9 @@ export default {
     mdbTblHead,
     mdbTblBody,
     AssignmentsTableHeader,
+  },
+  props: {
+    chores: Array,
   },
   data: function() {
     return {

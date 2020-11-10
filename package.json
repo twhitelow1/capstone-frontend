@@ -17,7 +17,8 @@
     "mdbvue": "6.7.1",
     "reset-css": "^5.0.1",
     "vue": "^2.6.12",
-    "vue-router": "^3.2.0"
+    "vue-router": "^3.2.0",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

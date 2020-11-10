@@ -1,10 +1,10 @@
 <template>
   <mdb-row class="home m-0 grey lighten-3" style="min-height:inherit;">
     <mdb-col lg="2" class="p-0 mr-5">
-      <LeftNavigation props="{ users }" />
+      <LeftNavigation />
     </mdb-col>
     <mdb-col lg="9">
-      <AssignmentsList />
+      <AssignmentsList v-bind:chores="chores" />
     </mdb-col>
   </mdb-row>
 </template>
@@ -26,6 +26,7 @@ body {
 </style>
 
 <script>
+import axios from "axios";
 import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
 // import ChoresList from "../components/ChoresList";
@@ -41,7 +42,6 @@ const filters = {
 export default {
   components: {
     AssignmentsList,
-    // ChoresList,
     mdbCol,
     mdbRow,
     LeftNavigation,
@@ -62,6 +62,7 @@ export default {
   },
   created: function() {
     this.checkVisibility();
+    this.indexChores();
   },
   mounted: function() {
     this.checkVisibility();
@@ -76,6 +77,12 @@ export default {
       if (this.$route.query.visibility) {
         this.visibility = this.$route.query.visibility;
       }
+    },
+    indexChores: function() {
+      axios.get("/api/chores").then(response => {
+        console.log("chores index", response);
+        this.chores = response.data;
+      });
     },
   },
 };

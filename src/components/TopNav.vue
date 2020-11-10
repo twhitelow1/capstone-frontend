@@ -1,7 +1,7 @@
 <template>
   <mdb-navbar
     color="white"
-    class="lighten-4 blue-grey-text top-nav"
+    class="darken-4 blue-grey-text top-nav"
     hamburger
     navIconClass="blue-grey-text"
     expand="xl"

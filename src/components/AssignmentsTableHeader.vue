@@ -1,19 +1,49 @@
 <template>
   <div>
     <!-- Add  modal form from mdb here instead -->
-    <mdb-modal :show="addNewModal" @close="addNewModal = false">
-      <mdb-modal-header>
-        <mdb-modal-title>Assign A Chore</mdb-modal-title>
+    <mdb-modal :show="addNewModal" @close="addNewModal = false" cascade>
+      <mdb-modal-header class="unique-color-dark white-text">
+        <h4 class="title">
+          <i class="fas fa-plus" />
+          Assign A Chore
+        </h4>
       </mdb-modal-header>
-      <mdb-modal-body>
-        <label for="select-user">Assign To:</label>
-        <select class="custom-select " name="select-user" id="select-user" v-model="newAssignmentUserId">
-          <option selected>Select House Member</option>
-          <option v-for="member in houseMembers" :key="`m-${member}`">{{ member }}</option>
-        </select>
-        <p>Date Due:</p>
-        <p>Is Completed?:</p>
-        <p>Assigned By:</p>
+      <mdb-modal-body class="grey-text">
+        <mdb-row class="align-items-center justify-content-between mb-2">
+          <mdb-col class="d-flex justify-content-start">
+            <label for="select-user">Chore:</label>
+          </mdb-col>
+          <mdb-col class="d-flex justify-content-end p-0">
+            <select class="custom-select" name="select-chore" id="select-chore" v-model="newAssignmentChoreId">
+              <option selected>Select Chore</option>
+              <option v-for="chore in chores" :key="`m-${chore.id}`">{{ chore.id }}</option>
+            </select>
+          </mdb-col>
+        </mdb-row>
+        <mdb-row class="align-items-center justify-content-between mb-2">
+          <mdb-col class="d-flex justify-content-start">
+            <label for="select-user">Assign To:</label>
+          </mdb-col>
+          <mdb-col class="d-flex justify-content-end p-0">
+            <select class="custom-select" name="select-user" id="select-user" v-model="newAssignmentUserId">
+              <option selected>Select House Member</option>
+              <option v-for="member in houseMembers" :key="`m-${member}`">{{ member }}</option>
+            </select>
+          </mdb-col>
+        </mdb-row>
+        <mdb-row class="align-items-center justify-content-between">
+          <mdb-col class="d-flex justify-content-start">
+            <label for="due-date ">Date Due:</label>
+          </mdb-col>
+          <mdb-col class="d-flex justify-content-end p-0">
+            <datepicker
+              placeholder="Select Date"
+              input-class="custom-select"
+              v-model="newAssignmentDueDate"
+              id="due-date"
+            ></datepicker>
+          </mdb-col>
+        </mdb-row>
       </mdb-modal-body>
       <mdb-modal-footer>
         <mdb-btn color="secondary" @click.native="addNewModal = false">Close</mdb-btn>
@@ -64,20 +94,19 @@
     <!--/Card image-->
   </div>
 </template>
+
+<style scoped>
+.custom-select {
+  margin-left: 0.5em;
+  width: 80%;
+}
+</style>
+
 <script>
 import axios from "axios";
-// eslint-disable-next-line no-unused-vars
-import { parseJSON, format } from "date-fns";
-import {
-  mdbTooltip,
-  mdbBtn,
-  mdbModal,
-  mdbModalHeader,
-  mdbModalTitle,
-  mdbModalBody,
-  mdbModalFooter,
-  mdbAutocomplete,
-} from "mdbvue";
+import Datepicker from "vuejs-datepicker";
+import { format } from "date-fns";
+import { mdbTooltip, mdbBtn, mdbModal, mdbModalHeader, mdbCol, mdbModalBody, mdbModalFooter, mdbRow } from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -91,23 +120,29 @@ export default {
     mdbBtn,
     mdbModal,
     mdbModalHeader,
-    mdbModalTitle,
     mdbModalBody,
     mdbModalFooter,
-    mdbAutocomplete,
+    mdbCol,
+    Datepicker,
+    mdbRow,
+  },
+  props: {
+    chores: Array,
   },
   data: function() {
     return {
       assignments: [],
       houseMembers: ["Todd", "Kiya"],
-      newAssignmentUserId: "",
-      newAssignmentChoreId: "",
-      newAssignmentAssignerId: "",
+      newAssignmentUserId: 0,
+      newAssignmentChoreId: 0,
+      newAssignmentAssignerId: this.currentUserId,
+      newAssignmentDueDate: new Date(),
       format,
       completedAssignments: {},
       visibility: "active",
       modal: false,
       addNewModal: false,
+      currentUserId: 1,
     };
   },
   computed: {
