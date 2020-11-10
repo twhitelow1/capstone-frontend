@@ -15,8 +15,10 @@
           </mdb-col>
           <mdb-col class="d-flex justify-content-end p-0">
             <select class="custom-select" name="select-chore" id="select-chore" v-model="newAssignmentChoreId">
-              <option selected>Select Chore</option>
-              <option v-for="chore in chores" :key="`m-${chore.id}`">{{ chore.id }}</option>
+              <option disabled value="none">Select Chore</option>
+              <option v-for="(chore, index) in chores" :key="`m-${index}`" value="`${chore.id}`">
+                {{ chore.title }}
+              </option>
             </select>
           </mdb-col>
         </mdb-row>
@@ -26,8 +28,8 @@
           </mdb-col>
           <mdb-col class="d-flex justify-content-end p-0">
             <select class="custom-select" name="select-user" id="select-user" v-model="newAssignmentUserId">
-              <option selected>Select House Member</option>
-              <option v-for="member in houseMembers" :key="`m-${member}`">{{ member }}</option>
+              <option disabled>Select House Member</option>
+              <option v-for="(member, index) in houseMembers" :key="`mem${index}`">{{ member }}</option>
             </select>
           </mdb-col>
         </mdb-row>
