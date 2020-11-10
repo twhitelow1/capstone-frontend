@@ -16,12 +16,12 @@
     <br />
     <div id="home-info">
       <h4 class="h4-responsive">Home Information</h4>
-      <mdb-row class="py-2 justify-content-md-center">
+      <mdb-row class="py-2 px-xl-4 px-lg-3 px-md-2 justify-content-center">
         <mdb-col col="1">
-          <i class="fas fa-location-arrow fa-2x pl-2" alt="Address Icon" />
+          <i style="font-size: 2.3vw; font-weight: bold;" class="fas fa-location-arrow fa-2x" alt="Address Icon" />
         </mdb-col>
-        <mdb-col col="11">
-          <p class="h5-responsive">
+        <mdb-col col="9">
+          <p style="font-size: 1.4vw; font-weight: bold;">
             2801 Basingdale
             <br />
             Vail, Co 81657
