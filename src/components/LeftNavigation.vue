@@ -15,13 +15,13 @@
     </div>
     <br />
     <div id="home-info">
-      <h5 class="h5-responsive">Home Information</h5>
-      <mdb-row class="py-2 px-2">
-        <mdb-col col="4">
-          <i class="fas fa-location-arrow fa-2x pl-5" alt="Address Icon" />
+      <h4 class="h4-responsive">Home Information</h4>
+      <mdb-row class="py-2 justify-content-md-center">
+        <mdb-col col="1">
+          <i class="fas fa-location-arrow fa-2x pl-2" alt="Address Icon" />
         </mdb-col>
-        <mdb-col col="8">
-          <p>
+        <mdb-col col="11">
+          <p class="h5-responsive">
             2801 Basingdale
             <br />
             Vail, Co 81657
@@ -29,7 +29,7 @@
         </mdb-col>
       </mdb-row>
       <div class="px-4">
-        <h5 class="h5-responsive">Household Memebers</h5>
+        <h4 class="h4-responsive">Household Memebers</h4>
         <div class="text-left flex-row">
           <mdb-card class="my-3">
             <div class="row p-2 align-items-center">
@@ -71,6 +71,9 @@
 </template>
 
 <style scoped>
+i {
+  color: #00695c;
+}
 h1,
 h2,
 h3,
