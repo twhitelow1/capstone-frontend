@@ -8,7 +8,12 @@
         <div>
           <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
             <span slot="tip">Add A New Assignment</span>
-            <button slot="reference" type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+            <button
+              @click="addNewModal = true"
+              slot="reference"
+              type="button"
+              class="btn btn-outline-white btn-rounded btn-sm px-2"
+            >
               <i class="fas fa-plus mt-0"></i>
             </button>
           </mdb-tooltip>
@@ -88,6 +93,23 @@
       </mdb-modal-body>
       <mdb-modal-footer>
         <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
+        <mdb-btn color="primary">Save changes</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
+
+    <mdb-modal :show="addNewModal" @close="addNewModal = false">
+      <mdb-modal-header>
+        <mdb-modal-title>Assignment Info</mdb-modal-title>
+      </mdb-modal-header>
+      <mdb-modal-body>
+        <p>Assigned To: {{ currentAssignment.user.first_name }}</p>
+        <p>Chore: {{ currentAssignment.chore.title }}</p>
+        <p>Date Due: {{ parseISO(currentAssignment.due_date) }}</p>
+        <p>Is Completed?: {{ currentAssignment.completed }}</p>
+        <p>Assigned By: {{ currentAssignment.assigner_id }}</p>
+      </mdb-modal-body>
+      <mdb-modal-footer>
+        <mdb-btn color="secondary" @click.native="addNewModal = false">Close</mdb-btn>
         <mdb-btn color="primary">Save changes</mdb-btn>
       </mdb-modal-footer>
     </mdb-modal>
@@ -238,6 +260,7 @@ export default {
       completedAssignments: {},
       visibility: "active",
       modal: false,
+      addNewModal: false,
     };
   },
   created: function() {
