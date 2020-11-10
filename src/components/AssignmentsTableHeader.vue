@@ -2,14 +2,13 @@
   <div>
     <mdb-modal :show="addNewModal" @close="addNewModal = false">
       <mdb-modal-header>
-        <mdb-modal-title>Assignment Info</mdb-modal-title>
+        <mdb-modal-title>Assign A Chore</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body>
-        <p>Assigned To: {{ currentAssignment.user.first_name }}</p>
-        <p>Chore: {{ currentAssignment.chore.title }}</p>
-        <p>Date Due: {{ parseISO(currentAssignment.due_date) }}</p>
-        <p>Is Completed?: {{ currentAssignment.completed }}</p>
-        <p>Assigned By: {{ currentAssignment.assigner_id }}</p>
+        <p>Assign To:</p>
+        <p>Date Due:</p>
+        <p>Is Completed?:</p>
+        <p>Assigned By:</p>
       </mdb-modal-body>
       <mdb-modal-footer>
         <mdb-btn color="secondary" @click.native="addNewModal = false">Close</mdb-btn>
@@ -64,7 +63,7 @@
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import { parseISO, parseJSON, format } from "date-fns";
-import { mdbTooltip, mdbBtn, mdbModal } from "mdbvue";
+import { mdbTooltip, mdbBtn, mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter } from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -77,11 +76,14 @@ export default {
     mdbTooltip,
     mdbBtn,
     mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
   },
   data: function() {
     return {
       assignments: [],
-      currentAssignment: { user: {}, chore: {} },
       parseISO,
       grabbedUser: {},
       format,
