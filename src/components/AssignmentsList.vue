@@ -1,16 +1,88 @@
 <template>
   <div class="assignments-list pt-5">
-    <h1 class="component-title">To Do List</h1>
-    <a class="filter-link" @click="changeVisibility('all')">All</a>
-    |
-    <a class="filter-link" @click="changeVisibility('active')">Active</a>
-    |
-    <a class="filter-link" @click="changeVisibility('completed')">Completed</a>
+    <div class="card card-cascade narrower">
+      <!--Card image-->
+      <div
+        class="view view-cascade gradient-card-header unique-color-dark narrower p-3 mx-0 mb-3 d-flex justify-content-between align-items-center"
+      >
+        <div>
+          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+            <i class="fas fa-th-large mt-0"></i>
+          </button>
+          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+            <i class="fas fa-columns mt-0"></i>
+          </button>
+        </div>
+        <div class="flex-column text-white">
+          <a href="" class="white-text mx-3 h4">Current Chores Assigned</a>
+          <br />
+          <a class="filter-link" @click="changeVisibility('all')">All</a>
+          |
+          <a class="filter-link" @click="changeVisibility('active')">Active</a>
+          |
+          <a class="filter-link" @click="changeVisibility('completed')">Completed</a>
+        </div>
+        <div>
+          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+            <i class="fas fa-pencil-alt mt-0"></i>
+          </button>
+          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+            <i class="fas fa-times mt-0"></i>
+          </button>
+          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+            <i class="fas fa-info-circle mt-0"></i>
+          </button>
+        </div>
+      </div>
+      <!--/Card image-->
+      <div class="px-4">
+        <div class="table-wrapper">
+          <!--Table-->
+          <mdb-tbl class="table table-hover mb-0" responsive>
+            <mdb-tbl-head>
+              <tr>
+                <th>
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1" />
+                    <label class="custom-control-label" for="tableDefaultCheck1"></label>
+                  </div>
+                </th>
+                <th class="th-lg">Chore Title</th>
+                <th class="th-lg">Assigned To</th>
+                <th class="th-lg">Date Due</th>
+              </tr>
+            </mdb-tbl-head>
 
-    <mdb-datatable :data="tableData" striped bordered />
-
+            <mdb-tbl-body>
+              <tr
+                v-for="assignment in filteredAssignments"
+                :key="`assign-${assignment.id}`"
+                scope="row"
+                @click="modal = true"
+              >
+                <th scope="row">
+                  <div class="custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="tableDefaultCheck1"
+                      v-model="assignment.completed"
+                    />
+                    <label class="custom-control-label" for="tableDefaultCheck1"></label>
+                  </div>
+                </th>
+                <td>{{ assignment.chore.title }}</td>
+                <td>{{ assignment.user.first_name }}</td>
+                <td>{{ assignment.date_due }}</td>
+              </tr>
+            </mdb-tbl-body>
+          </mdb-tbl>
+        </div>
+      </div>
+    </div>
+    <!-- 
     <ul class="assignment-list">
-      <li v-for="assignment in filteredAssignments" class="assignment" :key="`assign-${assignment.id}`">
+      <li v-for="assignment in filteredAssignments" class="assignment" :key="`agn-${assignment.id}`">
         <label class="container">
           <input class="toggle" type="checkbox" v-model="assignment.completed" />
           <span class="checkmark"></span>
@@ -19,7 +91,7 @@
           Assigned To: {{ assignment.user.first_name }} | Chore: {{ assignment.chore.title }}
         </label>
       </li>
-    </ul>
+    </ul> -->
     <mdb-modal :show="modal" @close="modal = false">
       <mdb-modal-header>
         <mdb-modal-title>Assignment Info</mdb-modal-title>
@@ -141,7 +213,17 @@ li {
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import { parseISO, parseJSON } from "date-fns";
-import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbBtn, mdbDatatable } from "mdbvue";
+import {
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+  mdbBtn,
+  mdbTbl,
+  mdbTblHead,
+  mdbTblBody,
+} from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -157,7 +239,9 @@ export default {
     mdbModalBody,
     mdbModalFooter,
     mdbBtn,
-    mdbDatatable,
+    mdbTbl,
+    mdbTblHead,
+    mdbTblBody,
   },
   data: function() {
     return {
@@ -173,6 +257,11 @@ export default {
       tableRows: [],
       tableData: {
         columns: [
+          {
+            label: "Check",
+            field: "completed",
+            sort: "none",
+          },
           {
             label: "name",
             field: "name",

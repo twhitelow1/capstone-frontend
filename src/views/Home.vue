@@ -5,12 +5,12 @@
         <mdb-col lg="2">
           <LeftNavigation />
         </mdb-col>
-        <mdb-col lg="7">
+        <mdb-col lg="9">
           <AssignmentsList />
         </mdb-col>
-        <mdb-col style="padding:0px;">
+        <!-- <mdb-col style="padding:0px;">
           <ChoresList />
-        </mdb-col>
+        </mdb-col> -->
       </mdb-row>
     </div>
   </div>
@@ -34,7 +34,7 @@ body {
 <script>
 import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
-import ChoresList from "../components/ChoresList";
+// import ChoresList from "../components/ChoresList";
 import LeftNavigation from "../components/LeftNavigation";
 import { mdbRow, mdbCol } from "mdbvue";
 
@@ -47,7 +47,7 @@ const filters = {
 export default {
   components: {
     AssignmentsList,
-    ChoresList,
+    // ChoresList,
     mdbRow,
     mdbCol,
     LeftNavigation,
