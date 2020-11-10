@@ -8,8 +8,8 @@
         </ul>
         <p class="h3 text-center mb-4">Log in</p>
         <div class="grey-text">
-          <mdb-input label="Your email" type="email" v-model="email" />
-          <mdb-input label="Your password" type="password" v-model="password" />
+          <mdb-input icon="envelope" label="Your email" type="email" v-model="email" />
+          <mdb-input icon="lock" label="Your password" type="password" v-model="password" />
         </div>
         <div class="text-center">
           <mdb-btn @click.native="submit" color="primary" rounded>Login</mdb-btn>
