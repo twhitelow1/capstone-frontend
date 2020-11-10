@@ -1,5 +1,5 @@
 <template>
-  <mdb-row class="home m-0">
+  <mdb-row class="home m-0 grey lighten-3">
     <mdb-col lg="2" class="p-0 mr-5">
       <LeftNavigation />
     </mdb-col>

@@ -1,7 +1,7 @@
 <template>
-  <div class="left-navigation pt-3">
+  <div class="left-navigation pt-3 grey lighten-5">
     <div>
-      <img src="https://via.placeholder.com/150" alt="user image" />
+      <img src="https://via.placeholder.com/150" alt="user profile image" class="img-fluid mb-4 rounded-circle" />
       <h2>Todd Whitelow</h2>
       <p>Points: 5000</p>
     </div>
@@ -24,7 +24,6 @@
 
 <style scoped>
 .left-navigation {
-  background-color: rgb(240, 240, 240);
   height: 100%;
   margin: 0;
 }
