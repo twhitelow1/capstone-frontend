@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <TopNav />
-    <router-view />
+    <div class="main-container">
+      <mdb-row>
+        <router-view />
+      </mdb-row>
+    </div>
   </div>
 </template>
 
@@ -41,10 +45,12 @@ $image-path: "~@/../mdb/mdbvue/img";
 
 <script>
 import TopNav from "./components/TopNav";
+import { mdbRow } from "mdbvue";
 
 export default {
   components: {
     TopNav,
+    mdbRow,
   },
 };
 </script>

@@ -1,27 +1,45 @@
 <template>
   <div class="login">
-    <form v-on:submit.prevent="submit()">
-      <h1>Login</h1>
-      <ul>
-        <li class="text-danger" :key="error" v-for="error in errors">{{ error }}</li>
-      </ul>
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" class="form-control" v-model="email" />
+    <mdb-col sm="12">
+      <div class="card p-3 m-5">
+        <!-- Material form login -->
+        <form>
+          <ul>
+            <li class="text-danger" :key="error" v-for="error in errors">{{ error }}</li>
+          </ul>
+          <p class="h3 text-center mb-4">Sign in</p>
+          <div class="grey-text">
+            <mdb-input label="Your email" type="email" v-model="email" />
+            <mdb-input label="Your password" type="password" v-model="password" />
+          </div>
+          <div class="text-center">
+            <mdb-btn>Login</mdb-btn>
+          </div>
+        </form>
+        <!-- Material form login -->
       </div>
-      <div class="form-group">
-        <label>Password:</label>
-        <input type="password" class="form-control" v-model="password" />
-      </div>
-      <input type="submit" class="btn btn-primary" value="Submit" />
-    </form>
+    </mdb-col>
   </div>
 </template>
 
+<style scoped>
+.login {
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+}
+</style>
+
 <script>
 import axios from "axios";
+import { mdbCol, mdbInput, mdbBtn } from "mdbvue";
 
 export default {
+  components: {
+    mdbCol,
+    mdbInput,
+    mdbBtn,
+  },
   data: function() {
     return {
       email: "",

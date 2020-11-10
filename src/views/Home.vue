@@ -1,18 +1,14 @@
 <template>
   <div class="home">
-    <div class="main-container">
-      <mdb-row>
-        <mdb-col lg="2">
-          <LeftNavigation />
-        </mdb-col>
-        <mdb-col lg="9">
-          <AssignmentsList />
-        </mdb-col>
-        <!-- <mdb-col style="padding:0px;">
+    <mdb-col lg="2">
+      <LeftNavigation />
+    </mdb-col>
+    <mdb-col lg="9">
+      <AssignmentsList />
+    </mdb-col>
+    <!-- <mdb-col style="padding:0px;">
           <ChoresList />
         </mdb-col> -->
-      </mdb-row>
-    </div>
   </div>
 </template>
 
@@ -36,7 +32,7 @@ import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
 // import ChoresList from "../components/ChoresList";
 import LeftNavigation from "../components/LeftNavigation";
-import { mdbRow, mdbCol } from "mdbvue";
+import { mdbCol } from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -48,7 +44,6 @@ export default {
   components: {
     AssignmentsList,
     // ChoresList,
-    mdbRow,
     mdbCol,
     LeftNavigation,
   },
@@ -79,11 +74,9 @@ export default {
   },
   methods: {
     checkVisibility: function() {
-      console.log(`my params: ${this.$route.query.visibility}`);
       if (this.$route.query.visibility) {
         this.visibility = this.$route.query.visibility;
       }
-      console.log(`set visibility: ${this.visibility}`);
     },
   },
 };
