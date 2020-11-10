@@ -76,11 +76,11 @@
       <div class="flex-column text-white">
         <a href="" class="white-text mx-3 h4">Current Chores Assigned</a>
         <br />
-        <a class="filter-link" @click="changeVisibility('all')">All</a>
+        <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
         |
-        <a class="filter-link" @click="changeVisibility('active')">Active</a>
+        <a class="filter-link" @click="changeVisibility('you')">Assigned To You</a>
         |
-        <a class="filter-link" @click="changeVisibility('completed')">Completed</a>
+        <a class="filter-link" @click="changeVisibility('completed')">Finished</a>
       </div>
       <div>
         <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
@@ -112,9 +112,15 @@ import { format } from "date-fns";
 import { mdbTooltip, mdbBtn, mdbModal, mdbModalHeader, mdbCol, mdbModalBody, mdbModalFooter, mdbRow } from "mdbvue";
 
 const filters = {
-  all: assignments => assignments,
-  active: assignments => assignments.filter(assignment => !assignment.completed),
-  completed: assignments => assignments.filter(assignment => assignment.completed),
+  all: assignments => !assignments.completed,
+  you: assignments =>
+    assignments
+      .filter(assignment => !assignment.completed)
+      .filter(assignment => assignment.user_id === this.currentUserId),
+  completed: assignments =>
+    assignments
+      .filter(assignment => assignment.completed)
+      .filter(assignment => assignment.user_id !== this.currentUserId),
 };
 
 export default {
