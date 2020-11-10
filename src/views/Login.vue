@@ -1,28 +1,30 @@
 <template>
-  <div class="login">
-    <mdb-col sm="12">
-      <div class="card p-3 m-5">
-        <!-- Material form login -->
-        <form>
-          <ul>
-            <li class="text-danger" :key="error" v-for="error in errors">{{ error }}</li>
-          </ul>
-          <p class="h3 text-center mb-4">Sign in</p>
-          <div class="grey-text">
-            <mdb-input label="Your email" type="email" v-model="email" />
-            <mdb-input label="Your password" type="password" v-model="password" />
-          </div>
-          <div class="text-center">
-            <mdb-btn>Login</mdb-btn>
-          </div>
-        </form>
-        <!-- Material form login -->
-      </div>
-    </mdb-col>
-  </div>
+  <mdb-row class="justify-content-md-center">
+    <div class="card m-5 p-4 w-responsive justify-content-center" cols="4">
+      <!-- Material form login -->
+      <form>
+        <ul>
+          <li class="text-danger" :key="error" v-for="error in errors">{{ error }}</li>
+        </ul>
+        <p class="h3 text-center mb-4">Log in</p>
+        <div class="grey-text">
+          <mdb-input label="Your email" type="email" v-model="email" />
+          <mdb-input label="Your password" type="password" v-model="password" />
+        </div>
+        <div class="text-center">
+          <mdb-btn @click.native="submit" color="primary" rounded>Login</mdb-btn>
+        </div>
+      </form>
+      <!-- Material form login -->
+    </div>
+  </mdb-row>
 </template>
 
 <style scoped>
+.card {
+  max-width: 500px;
+}
+
 .login {
   width: 90%;
   max-width: 500px;
@@ -32,11 +34,11 @@
 
 <script>
 import axios from "axios";
-import { mdbCol, mdbInput, mdbBtn } from "mdbvue";
+import { mdbRow, mdbInput, mdbBtn } from "mdbvue";
 
 export default {
   components: {
-    mdbCol,
+    mdbRow,
     mdbInput,
     mdbBtn,
   },

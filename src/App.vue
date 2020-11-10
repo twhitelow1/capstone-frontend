@@ -23,6 +23,14 @@ $image-path: "~@/../mdb/mdbvue/img";
   max-width: 100vw;
 }
 
+h1 {
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
 .component-title {
   font-size: 2em;
 }
@@ -38,6 +46,10 @@ $image-path: "~@/../mdb/mdbvue/img";
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.md-form i.fas.prefix {
+  left: 0px !important;
 }
 </style>
 
