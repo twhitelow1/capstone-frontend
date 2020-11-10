@@ -1,6 +1,6 @@
 <template>
   <div class="assignments-list pt-5">
-    <h1>To Do List</h1>
+    <h1 class="component-title">To Do List</h1>
     <a class="filter-link" @click="changeVisibility('all')">All</a>
     |
     <a class="filter-link" @click="changeVisibility('active')">Active</a>
@@ -47,6 +47,9 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0;
+}
+h1 {
+  font-size: 2em;
 }
 a.filter-link {
   cursor: pointer;
@@ -167,22 +170,32 @@ export default {
       completedAssignments: {},
       visibility: "active",
       modal: false,
+      tableRows: [],
       tableData: {
         columns: [
           {
             label: "name",
-            field: "user",
+            field: "name",
+            sort: "asc",
+          },
+          {
+            label: "chore",
+            field: "chore",
+            sort: "asc",
+          },
+          {
+            label: "date due",
+            field: "dateDue",
             sort: "asc",
           },
         ],
-        rows: this.assignments,
+        rows: [],
       },
     };
   },
   created: function() {
     this.indexAssignments();
     this.indexUsers();
-    console.log(this.assignments);
   },
   computed: {
     filteredAssignments: function() {
@@ -190,12 +203,13 @@ export default {
     },
   },
   methods: {
-    tableAssignments: function() {
-      const result = [];
-      this.assignments.each(assignment => {
-        result.push(assignment.user.first_name);
+    tableAssignments: function(assignments) {
+      const results = [];
+      assignments.each(assignment => {
+        results.push({ name: assignment.user.id });
       });
-      result;
+      console.log("tableAssignments results:" + results);
+      return results;
     },
     getCompletedAssignments: function() {
       this.indexAssignments();
@@ -211,6 +225,14 @@ export default {
       axios.get("/api/assignments").then(response => {
         console.log("asignments index", response);
         this.assignments = response.data;
+        this.assignments.forEach(assignment => {
+          this.tableData["rows"].push({
+            name: assignment.user.first_name,
+            chore: assignment.chore.title,
+            dateDue: assignment.date_due,
+          });
+        });
+        console.log(`tabeRows: ${this.tableData}`);
       });
     },
     indexUsers: function() {

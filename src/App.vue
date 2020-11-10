@@ -21,6 +21,10 @@ $image-path: "~@/../mdb/mdbvue/img";
   max-width: 100vw;
 }
 
+.component-title {
+  font-size: 2em;
+}
+
 #nav {
   padding: 30px;
 }
