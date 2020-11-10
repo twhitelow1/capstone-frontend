@@ -1,11 +1,16 @@
 <template>
   <div>
+    <!-- Add  modal form from mdb here instead -->
     <mdb-modal :show="addNewModal" @close="addNewModal = false">
       <mdb-modal-header>
         <mdb-modal-title>Assign A Chore</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body>
-        <p>Assign To:</p>
+        <label for="select-user">Assign To:</label>
+        <select class="custom-select " name="select-user" id="select-user" v-model="newAssignmentUserId">
+          <option selected>Select House Member</option>
+          <option v-for="member in houseMembers" :key="`m-${member}`">{{ member }}</option>
+        </select>
         <p>Date Due:</p>
         <p>Is Completed?:</p>
         <p>Assigned By:</p>
@@ -62,8 +67,17 @@
 <script>
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
-import { parseISO, parseJSON, format } from "date-fns";
-import { mdbTooltip, mdbBtn, mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter } from "mdbvue";
+import { parseJSON, format } from "date-fns";
+import {
+  mdbTooltip,
+  mdbBtn,
+  mdbModal,
+  mdbModalHeader,
+  mdbModalTitle,
+  mdbModalBody,
+  mdbModalFooter,
+  mdbAutocomplete,
+} from "mdbvue";
 
 const filters = {
   all: assignments => assignments,
@@ -80,12 +94,15 @@ export default {
     mdbModalTitle,
     mdbModalBody,
     mdbModalFooter,
+    mdbAutocomplete,
   },
   data: function() {
     return {
       assignments: [],
-      parseISO,
-      grabbedUser: {},
+      houseMembers: ["Todd", "Kiya"],
+      newAssignmentUserId: "",
+      newAssignmentChoreId: "",
+      newAssignmentAssignerId: "",
       format,
       completedAssignments: {},
       visibility: "active",
@@ -93,38 +110,31 @@ export default {
       addNewModal: false,
     };
   },
-  created: function() {
-    this.indexAssignments();
-  },
   computed: {
     filteredAssignments: function() {
       return filters[this.visibility](this.assignments);
     },
   },
   methods: {
-    tableAssignments: function(assignments) {
-      const results = [];
-      assignments.each(assignment => {
-        results.push({ name: assignment.user.id });
-      });
-      console.log("tableAssignments results:" + results);
-      return results;
-    },
-    getCompletedAssignments: function() {
-      this.indexAssignments();
-    },
     changeVisibility: function(handle) {
       return (this.visibility = handle);
     },
-    showAssignment: function(assignment) {
-      this.currentAssignment = assignment;
-      document.querySelector("#assignment-details").showModal();
-    },
-    indexAssignments: function() {
-      axios.get("/api/assignments").then(response => {
-        console.log("asignments index", response);
-        this.assignments = response.data;
-      });
+    createAssignments: function() {
+      var params = {
+        user_id: this.newAssignmentUserId,
+        chore_id: this.newAssignmentId,
+        due_date: this.newAssignmentDueDate,
+        assigner_id: this.newAssignmentAssignerId,
+      };
+      axios
+        .post("/api/assignments", params)
+        .then(response => {
+          this.$router.push("/");
+          console.log("assignments create", response);
+        })
+        .catch(error => {
+          console.log("assignments create error", error.response);
+        });
     },
   },
 };
