@@ -66,27 +66,15 @@
                     <label class="custom-control-label" for="tableDefaultCheck1"></label>
                   </div>
                 </th>
-                <td>{{ assignment.chore.title }}</td>
-                <td>{{ assignment.user.first_name }}</td>
-                <td>{{ assignment.date_due }}</td>
+                <td>{{ assignment.choreTitle }}</td>
+                <td>{{ assignment.first_name }}</td>
+                <td>{{ format(new Date(assignment.jsDate), "MM/dd/yyyy") }}</td>
               </tr>
             </mdb-tbl-body>
           </mdb-tbl>
         </div>
       </div>
     </div>
-    <!-- 
-    <ul class="assignment-list">
-      <li v-for="assignment in filteredAssignments" class="assignment" :key="`agn-${assignment.id}`">
-        <label class="container">
-          <input class="toggle" type="checkbox" v-model="assignment.completed" />
-          <span class="checkmark"></span>
-        </label>
-        <label @click="modal = true" class="complete-box">
-          Assigned To: {{ assignment.user.first_name }} | Chore: {{ assignment.chore.title }}
-        </label>
-      </li>
-    </ul> -->
     <mdb-modal :show="modal" @close="modal = false">
       <mdb-modal-header>
         <mdb-modal-title>Assignment Info</mdb-modal-title>
@@ -207,7 +195,7 @@ li {
 <script>
 import axios from "axios";
 // eslint-disable-next-line no-unused-vars
-import { parseISO, parseJSON } from "date-fns";
+import { parseISO, parseJSON, format } from "date-fns";
 import {
   mdbModal,
   mdbModalHeader,
@@ -240,46 +228,18 @@ export default {
   },
   data: function() {
     return {
-      users: [],
       assignments: [],
       currentAssignment: { user: {}, chore: {} },
-      currentChore: { room: {} },
       parseISO,
       grabbedUser: {},
+      format,
       completedAssignments: {},
       visibility: "active",
       modal: false,
-      tableRows: [],
-      tableData: {
-        columns: [
-          {
-            label: "Check",
-            field: "completed",
-            sort: "none",
-          },
-          {
-            label: "name",
-            field: "name",
-            sort: "asc",
-          },
-          {
-            label: "chore",
-            field: "chore",
-            sort: "asc",
-          },
-          {
-            label: "date due",
-            field: "dateDue",
-            sort: "asc",
-          },
-        ],
-        rows: [],
-      },
     };
   },
   created: function() {
     this.indexAssignments();
-    this.indexUsers();
   },
   computed: {
     filteredAssignments: function() {
@@ -309,20 +269,6 @@ export default {
       axios.get("/api/assignments").then(response => {
         console.log("asignments index", response);
         this.assignments = response.data;
-        this.assignments.forEach(assignment => {
-          this.tableData["rows"].push({
-            name: assignment.user.first_name,
-            chore: assignment.chore.title,
-            dateDue: assignment.date_due,
-          });
-        });
-        console.log(`tabeRows: ${this.tableData}`);
-      });
-    },
-    indexUsers: function() {
-      axios.get("/api/users").then(response => {
-        console.log("users index", response);
-        this.users = response.data;
       });
     },
   },
