@@ -9,7 +9,7 @@
       >
         <div>
           <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
-            <span slot="tip">Add A New Assignment</span>
+            <span slot="tip">New Chore</span>
             <button
               @click="addNewModal = true"
               slot="reference"
@@ -38,29 +38,25 @@
       <div class="px-4">
         <div class="table-wrapper">
           <!--Table-->
-          <table class="table table-hover mb-0" responsive>
-            <thead>
+          <mdb-tbl class="table table-hover mb-0" responsive>
+            <mdb-tbl-head>
               <tr>
                 <th class="th-lg">Chore</th>
                 <th class="th-lg">Frequency</th>
-                <th class="th-lg">Points Earn</th>
-                <th class="th-lg">Points Cost</th>
                 <th class="th-lg">Room</th>
                 <th class="th-lg">Assigned?</th>
               </tr>
-            </thead>
+            </mdb-tbl-head>
 
-            <tbody>
+            <mdb-tbl-body>
               <tr v-for="chore in chores" :key="`chore-${chore.id}`" scope="row" @click="modal = true">
                 <td>{{ chore.title }}</td>
                 <td>{{ chore.frequency }} hours</td>
-                <td>{{ chore.points_gain }}</td>
-                <td>{{ chore.points_price }}</td>
                 <td>{{ chore.room_name }}</td>
                 <td>{{ chore.assigned }}</td>
               </tr>
-            </tbody>
-          </table>
+            </mdb-tbl-body>
+          </mdb-tbl>
         </div>
       </div>
     </div>
@@ -87,7 +83,7 @@
 
 <script>
 import axios from "axios";
-import { mdbTooltip } from "mdbvue";
+import { mdbTooltip, mdbTbl, mdbTblHead, mdbTblBody } from "mdbvue";
 
 export default {
   components: {
@@ -97,6 +93,9 @@ export default {
     // mdbModalBody,
     // mdbModalFooter,
     // mdbBtn,
+    mdbTbl,
+    mdbTblHead,
+    mdbTblBody,
     mdbTooltip,
   },
   data: function() {

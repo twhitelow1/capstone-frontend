@@ -10,10 +10,12 @@
         </mdb-col>
       </mdb-row>
       <mdb-row>
-        <mdb-col>
+        <mdb-col class="col-xl-6">
           <ChoresList v-bind:chores="chores" />
         </mdb-col>
-        <mdb-col></mdb-col>
+        <mdb-col class="col-xl-6">
+          <ChoresList v-bind:chores="chores" />
+        </mdb-col>
       </mdb-row>
     </mdb-col>
   </mdb-row>
