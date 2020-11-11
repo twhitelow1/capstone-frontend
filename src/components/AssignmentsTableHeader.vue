@@ -16,7 +16,7 @@
           <mdb-col class="d-flex justify-content-end p-0">
             <select class="custom-select" name="select-chore" id="select-chore" v-model="newAssignmentChoreId">
               <option disabled value="none">Select Chore</option>
-              <option v-for="(chore, index) in chores" :key="`m-${index}`" value="`${chore.id}`">
+              <option v-for="(chore, index) in chores" :key="`m-${index}`" :value="`${chore.id}`">
                 {{ chore.title }}
               </option>
             </select>
@@ -29,7 +29,9 @@
           <mdb-col class="d-flex justify-content-end p-0">
             <select class="custom-select" name="select-user" id="select-user" v-model="newAssignmentUserId">
               <option disabled>Select House Member</option>
-              <option v-for="(member, index) in houseMembers" :key="`mem${index}`">{{ member }}</option>
+              <option v-for="(member, index) in houseMembers" :key="`mem${index}`" :value="`${member.id}`">
+                {{ member }}
+              </option>
             </select>
           </mdb-col>
         </mdb-row>
@@ -49,7 +51,7 @@
       </mdb-modal-body>
       <mdb-modal-footer>
         <mdb-btn color="secondary" @click.native="addNewModal = false">Close</mdb-btn>
-        <mdb-btn color="primary">Save changes</mdb-btn>
+        <mdb-btn color="primary" @click.native="createAssignments">Assign Chore</mdb-btn>
       </mdb-modal-footer>
     </mdb-modal>
     <!--Card image-->
@@ -144,7 +146,7 @@ export default {
       houseMembers: ["Todd", "Kiya"],
       newAssignmentUserId: 0,
       newAssignmentChoreId: 0,
-      newAssignmentAssignerId: this.currentUserId,
+      newAssignmentAssignerId: 1,
       newAssignmentDueDate: new Date(),
       format,
       completedAssignments: {},
@@ -170,11 +172,14 @@ export default {
         due_date: this.newAssignmentDueDate,
         assigner_id: this.newAssignmentAssignerId,
       };
+      console.log(`params: ${params}`);
       axios
         .post("/api/assignments", params)
         .then(response => {
+          this.addNewModal = false;
           this.$router.push("/");
           console.log("assignments create", response);
+          this.filteredAssignments();
         })
         .catch(error => {
           console.log("assignments create error", error.response);

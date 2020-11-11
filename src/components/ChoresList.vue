@@ -49,7 +49,7 @@
             </mdb-tbl-head>
 
             <mdb-tbl-body>
-              <tr v-for="chore in chores" :key="`chore-${chore.id}`" scope="row" @click="modal = true">
+              <tr v-for="(chore, index) in chores" :key="`chore-${index}`" scope="row" @click="modal = true">
                 <td>{{ chore.title }}</td>
                 <td>{{ chore.frequency }} hours</td>
                 <td>{{ chore.room_name }}</td>
