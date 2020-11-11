@@ -4,7 +4,17 @@
       <LeftNavigation />
     </mdb-col>
     <mdb-col sm="9">
-      <AssignmentsList v-bind:chores="chores" />
+      <mdb-row>
+        <mdb-col>
+          <AssignmentsList v-bind:chores="chores" />
+        </mdb-col>
+      </mdb-row>
+      <mdb-row>
+        <mdb-col>
+          <ChoresList v-bind:chores="chores" />
+        </mdb-col>
+        <mdb-col></mdb-col>
+      </mdb-row>
     </mdb-col>
   </mdb-row>
 </template>
@@ -29,7 +39,7 @@ body {
 import axios from "axios";
 import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
-// import ChoresList from "../components/ChoresList";
+import ChoresList from "../components/ChoresList";
 import LeftNavigation from "../components/LeftNavigation";
 import { mdbCol, mdbRow } from "mdbvue";
 
@@ -45,6 +55,7 @@ export default {
     mdbCol,
     mdbRow,
     LeftNavigation,
+    ChoresList,
   },
   data: function() {
     return {

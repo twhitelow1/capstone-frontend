@@ -1,50 +1,68 @@
 <template>
-  <div class="chores-list pt-3">
-    <h2>Assign A Chore</h2>
-    <div>
-      <mdb-row align-h="center">
-        <mdb-col class="chore-col">
-          <mdb-card v-for="(chore, index) in chores" :key="index">
-            <p>Chore Name: {{ chore.title }}</p>
-            <p>Last Time Completed: {{ chore.last_completed }}</p>
-            <p>Room: {{ chore.room.name }}</p>
-            <mdb-btn>Assign Chore</mdb-btn>
-            <mdb-btn @click="modal = true">More Info</mdb-btn>
+  <div class="assignments-list pt-5">
+    <div class="card card-cascade narrower">
+      <!-- <AssignmentsTableHeader v-bind:chores="chores" /> -->
+      <!--Card image-->
+      <div
+        class="view view-cascade default-color-dark narrower w-100 p-3 mx-0 mb-3 d-flex justify-content-between align-items-center"
+        style="border-radius:5px 5px 0 0;"
+      >
+        <div>
+          <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
+            <span slot="tip">Add A New Assignment</span>
+            <button
+              @click="addNewModal = true"
+              slot="reference"
+              type="button"
+              class="btn btn-outline-white btn-rounded btn-sm px-2"
+            >
+              <i class="fas fa-plus mt-0"></i>
+            </button>
+          </mdb-tooltip>
+        </div>
+        <div class="flex-column text-white">
+          <a href="" class="white-text mx-3 h4">Chores Manager</a>
+        </div>
+        <div>
+          <div>
+            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+              <i class="fas fa-pencil-alt mt-0"></i>
+            </button>
+            <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+              <i class="fas fa-times mt-0"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!--/Card image-->
+      <div class="px-4">
+        <div class="table-wrapper">
+          <!--Table-->
+          <table class="table table-hover mb-0" responsive>
+            <thead>
+              <tr>
+                <th class="th-lg">Chore</th>
+                <th class="th-lg">Frequency</th>
+                <th class="th-lg">Points Earn</th>
+                <th class="th-lg">Points Cost</th>
+                <th class="th-lg">Room</th>
+                <th class="th-lg">Assigned?</th>
+              </tr>
+            </thead>
 
-            <mdb-modal :show="modal" @close="modal = false">
-              <mdb-modal-header>
-                <mdb-modal-title>Chore Info</mdb-modal-title>
-              </mdb-modal-header>
-              <mdb-modal-body>
-                <p>Chore Name: {{ chore.title }}</p>
-                <p>Description: {{ chore.desc }}</p>
-                <p>How often does the chore need to be done: {{ chore.frequency }} day(s)</p>
-                <p>Last Time Completed: {{ chore.last_completed }}</p>
-                <p>Earn: {{ chore.points_gain }} points</p>
-                <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
-                <p>Room: {{ chore.room.name }}</p>
-              </mdb-modal-body>
-              <mdb-modal-footer>
-                <mdb-btn color="secondary" @click="modal = false">Close</mdb-btn>
-                <mdb-btn color="primary">Save changes</mdb-btn>
-              </mdb-modal-footer>
-            </mdb-modal>
-            <!-- <dialog id="chore-details">
-              <form method="dialog">
-                <h1>Chore Info</h1>
-                <p>Chore Name: {{ chore.title }}</p>
-                <p>Description: {{ chore.desc }}</p>
-                <p>How often does the chore need to be done: {{ chore.frequency }} day(s)</p>
-                <p>Last Time Completed: {{ chore.last_completed }}</p>
-                <p>Earn: {{ chore.points_gain }} points</p>
-                <p>Cost To Get Someone Else To Do It: {{ chore.points_price }} points</p>
-                <p>Room: {{ chore.room.name }}</p>
-                <b-button>Close</b-button>
-              </form>
-            </dialog> -->
-          </mdb-card>
-        </mdb-col>
-      </mdb-row>
+            <tbody>
+              <tr v-for="chore in chores" :key="`chore-${chore.id}`" scope="row" @click="modal = true">
+                <td>{{ chore.title }}</td>
+                <td>{{ chore.frequency }} hours</td>
+                <td>{{ chore.points_gain }}</td>
+                <td>{{ chore.points_price }}</td>
+                <td>{{ chore.room_name }}</td>
+                <td>{{ chore.Assigned }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -69,34 +87,21 @@
 
 <script>
 import axios from "axios";
-import {
-  mdbModal,
-  mdbModalHeader,
-  mdbModalTitle,
-  mdbModalBody,
-  mdbModalFooter,
-  mdbBtn,
-  mdbCard,
-  mdbRow,
-  mdbCol,
-} from "mdbvue";
+import { mdbTooltip } from "mdbvue";
 
 export default {
   components: {
-    mdbModal,
-    mdbModalHeader,
-    mdbModalTitle,
-    mdbModalBody,
-    mdbModalFooter,
-    mdbBtn,
-    mdbCard,
-    mdbRow,
-    mdbCol,
+    // mdbModal,
+    // mdbModalHeader,
+    // mdbModalTitle,
+    // mdbModalBody,
+    // mdbModalFooter,
+    // mdbBtn,
+    mdbTooltip,
   },
   data: function() {
     return {
       chores: [],
-      users: [],
       currentAssignment: { user: {}, chore: {} },
       currentChore: { room: {} },
       grabbedUser: {},
@@ -117,7 +122,7 @@ export default {
     },
     showChore: function(chore) {
       this.currentChore = chore;
-      document.querySelector("#chore-details").showModal();
+      this.modal = true;
     },
     getCompletedAssignments: function() {
       this.indexAssignments();
@@ -127,7 +132,6 @@ export default {
         title: this.newChoreTitle,
         desc: this.newChoreDesc,
         frequency: this.newChoreFrequency,
-        last_completed: this.newChoreLastCompleted,
         points_gain: this.newChorePointsGain,
         points_price: this.newChorePointsPrice,
         room_id: this.newChoreRoomId,
