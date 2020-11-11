@@ -74,7 +74,7 @@
           </button> -->
       </div>
       <div class="flex-column text-white">
-        <a href="" class="white-text mx-3 h4">Current Chores Assigned</a>
+        <a href="" class="white-text mx-3 h4">Assigned Chores</a>
         <br />
         <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
         |

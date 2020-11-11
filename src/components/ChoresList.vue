@@ -57,7 +57,7 @@
                 <td>{{ chore.points_gain }}</td>
                 <td>{{ chore.points_price }}</td>
                 <td>{{ chore.room_name }}</td>
-                <td>{{ chore.Assigned }}</td>
+                <td>{{ chore.assigned }}</td>
               </tr>
             </tbody>
           </table>
