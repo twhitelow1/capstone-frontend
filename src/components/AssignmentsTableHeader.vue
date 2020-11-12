@@ -76,9 +76,6 @@
             <b class="h6"> ASSIGNMENT</b>
           </button>
         </mdb-tooltip>
-        <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-            <i class="fas fa-columns mt-0"></i>
-          </button> -->
       </mdb-col>
       <mdb-col md="6" class="text-white">
         <a href="" class="white-text mx-3 h4">Assigned Chores</a>
@@ -101,9 +98,6 @@
         >
           <i class="fas fa-times mt-0"></i>
         </button>
-        <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-          <i class="fas fa-info-circle mt-0"></i>
-        </button> -->
       </mdb-col>
     </div>
     <!--/Card image-->
@@ -122,14 +116,6 @@ import axios from "axios";
 import Datepicker from "vuejs-datepicker";
 import { format } from "date-fns";
 import { mdbTooltip, mdbBtn, mdbModal, mdbModalHeader, mdbCol, mdbModalBody, mdbModalFooter, mdbRow } from "mdbvue";
-
-// const filters = {
-//   all: (assignments) => !assignments.completed,
-//   you: (assignments) =>
-//     assignments.filter((assignment) => !assignment.completed).filter((assignment) => assignment.user_id === 1),
-//   completed: (assignments) =>
-//     assignments.filter((assignment) => assignment.completed).filter((assignment) => assignment.user_id !== 1),
-// };
 
 export default {
   components: {
