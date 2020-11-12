@@ -15,14 +15,22 @@
               <tr>
                 <th>
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1" v-model="selectAll" />
+                    <input
+                      type="checkbox"
+                      class="custom-control-input align-middle"
+                      id="tableDefaultCheck1"
+                      v-model="selectAll"
+                    />
                     <label class="custom-control-label" for="tableDefaultCheck1"></label>
                   </div>
                 </th>
-                <th class="th-lg">Chore Title</th>
-                <th class="th-lg">Assigned To</th>
-                <th class="th-lg">Room</th>
-                <th class="th-lg">Date Due</th>
+                <th class="th-lg assignment-row"><h4 class="h4">Chore Title</h4></th>
+                <th class="th-lg">
+                  <h4 class="h4">Assigned To</h4>
+                </th>
+                <th class="th-lg"><h4 class="h4">Room</h4></th>
+                <th class="th-lg"><h4 class="h4">Date Due</h4></th>
+                <th class="th-lg"></th>
               </tr>
             </mdb-tbl-head>
 
@@ -31,8 +39,9 @@
                 v-for="assignment in this.$store.state.filteredAssignments"
                 :key="`assign-${assignment.id}`"
                 scope="row"
+                class="text-center assingment-row"
               >
-                <th scope="row">
+                <th scope="row" class="align-middle">
                   <div class="custom-control custom-checkbox">
                     <input
                       type="checkbox"
@@ -45,10 +54,21 @@
                     <label class="custom-control-label" :for="`ck${assignment.id}`"></label>
                   </div>
                 </th>
-                <td>{{ assignment.choreTitle }}</td>
-                <td>{{ assignment.first_name }}</td>
-                <td>{{ assignment.room }}</td>
-                <td>{{ format(new Date(assignment.jsDate), "MM/dd/yyyy") }}</td>
+                <td class="align-middle assignment-row">{{ assignment.choreTitle }}</td>
+                <td class="align-middle assignment-row">
+                  <p>{{ assignment.first_name }}</p>
+                </td>
+                <td class="align-middle assignment-row">
+                  <p>{{ assignment.room }}</p>
+                </td>
+                <td class="align-middle assignment-row">
+                  <p>{{ format(new Date(assignment.jsDate), "MM/dd/yyyy") }}</p>
+                </td>
+                <td class="align-middle">
+                  <button type="button" class="btn btn-outline-dark btn-rounded btn-sm px-2">
+                    <i class="fas fa-pencil-alt mt-0"></i>
+                  </button>
+                </td>
               </tr>
             </mdb-tbl-body>
           </mdb-tbl>
@@ -71,6 +91,64 @@
         <mdb-btn color="primary">Save changes</mdb-btn>
       </mdb-modal-footer>
     </mdb-modal>
+    <!-- Add  modal form from mdb here instead -->
+    <mdb-modal :show="updateAssignmentModal" @close="updateAssignmentModal = false" cascade>
+      <mdb-modal-header class="default-color-dark white-text">
+        <h4 class="title">
+          <i class="fas fa-plus" />
+          Edit Assignment
+        </h4>
+      </mdb-modal-header>
+      <mdb-modal-body class="grey-text">
+        <mdb-row class="align-items-center justify-content-between mb-2">
+          <mdb-col class="d-flex justify-content-start">
+            <label for="select-user">Chore:</label>
+          </mdb-col>
+          <mdb-col class="d-flex justify-content-end p-0">
+            <select class="custom-select" name="select-chore" id="select-chore" v-model="currentAssignmentChore">
+              <option disabled value="none">Select Chore</option>
+              <option v-for="(chore, index) in chores" :key="`m-${index}`" :value="`${chore.id}`">
+                {{ chore.title }}
+              </option>
+            </select>
+          </mdb-col>
+        </mdb-row>
+        <mdb-row class="align-items-center justify-content-between mb-2">
+          <mdb-col class="d-flex justify-content-start">
+            <label for="select-user">Assign To:</label>
+          </mdb-col>
+          <mdb-col class="d-flex justify-content-end p-0">
+            <select class="custom-select" name="select-user" id="select-user" v-model="newAssignmentUserId">
+              <option disabled>Select House Member</option>
+              <option
+                v-for="(housemate, index) in currentUser.housemates"
+                :key="`mem${index}`"
+                :value="`${housemate.id}`"
+              >
+                {{ housemate.first_name }}
+              </option>
+            </select>
+          </mdb-col>
+        </mdb-row>
+        <mdb-row class="align-items-center justify-content-between">
+          <mdb-col class="d-flex justify-content-start">
+            <label for="due-date ">Date Due:</label>
+          </mdb-col>
+          <mdb-col class="d-flex justify-content-end p-0">
+            <datepicker
+              placeholder="Select Date"
+              input-class="custom-select"
+              v-model="newAssignmentDueDate"
+              id="due-date"
+            ></datepicker>
+          </mdb-col>
+        </mdb-row>
+      </mdb-modal-body>
+      <mdb-modal-footer>
+        <mdb-btn color="secondary" @click.native="addNewModal = false">Close</mdb-btn>
+        <mdb-btn color="primary" @click.native="createAssignments">Assign Chore</mdb-btn>
+      </mdb-modal-footer>
+    </mdb-modal>
   </div>
 </template>
 
@@ -82,6 +160,9 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 0;
+}
+.assignment-row p {
+  font-size: 1.3em;
 }
 h1 {
   font-size: 2em;
@@ -170,6 +251,10 @@ a.filter-link {
 li {
   list-style-type: none;
 }
+.table th,
+.table td {
+  vertical-align: middle;
+}
 </style>
 
 <script>
@@ -218,6 +303,7 @@ export default {
       modal: false,
       addNewModal: false,
       selected: [],
+      updateAssignmentModal: false,
     };
   },
   created: function () {

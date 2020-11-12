@@ -95,12 +95,6 @@
           </show-at>
         </div>
         <div class="col-3">
-          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-            <i class="fas fa-pencil-alt mt-0"></i>
-            <show-at breakpoint="mediumAndAbove">
-              <b class="h6">UPDATE</b>
-            </show-at>
-          </button>
           <button
             @click="completeAssignment(selected)"
             type="button"
@@ -215,6 +209,28 @@ export default {
     },
     addAssignment: function (event) {
       alert(event.target.value);
+    },
+    updateAssignment: function (assignment) {
+      const params = {
+        user_id: assignment.user_id,
+        chore_id: this.newAssignmentChoreId,
+        due_date: this.newAssignmentDueDate,
+        assigner_id: this.currentUser.id,
+      };
+      console.log(`params: ${params}`);
+      axios
+        .post("/api/assignments", params)
+        .then((response) => {
+          this.addNewModal = false;
+          console.log("assignments create", response);
+          this.$store.commit("addAssignment", response.data);
+          this.$store.commit("filterAssignments");
+
+          console.log(this.$store.state.assignments);
+        })
+        .catch((error) => {
+          console.log("assignments create error", error.response);
+        });
     },
     completeAssignment: function (assignments) {
       const params = {

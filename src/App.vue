@@ -13,6 +13,11 @@
 $image-path: "~@/../mdb/mdbvue/img";
 @import "~@/../mdb/mdbvue/scss/mdb-free.scss";
 
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

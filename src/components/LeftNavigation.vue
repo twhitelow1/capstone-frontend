@@ -7,7 +7,7 @@
         class="img-fluid z-index mb-3 rounded-circle profile hoverable"
         style="max-width:70%"
       />
-      <h2 class="h2-responsive pb-2">{{ currentUser.first_name }} {{ currentUser.last_name }}</h2>
+      <h2 class="h2-responsive pb-2">{{ currentUser.full_name }}</h2>
       <h3 class="h3-responsive ">
         Points:
         <span class="text-dark">{{ currentUser.points }}</span>
