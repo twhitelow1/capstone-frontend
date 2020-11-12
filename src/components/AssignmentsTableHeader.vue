@@ -60,45 +60,70 @@
     </mdb-modal>
     <!--Card image-->
     <div
-      class="view view-cascade default-color-dark narrower w-100 p-3 mx-0 mb-3 d-flex justify-content-between align-items-center"
+      class="view view-cascade default-color-dark narrower w-100 py-3 px-2 mx-0 mb-3 d-flex flex-wrap justify-content-between align-items-center"
       style="border-radius:5px 5px 0 0;"
     >
-      <mdb-col md="3">
-        <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
-          <span slot="tip">Add A New Assignment</span>
+      <div class="row">
+        <div class="col-3">
+          <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
+            <span slot="tip">Add A New Assignment</span>
+            <button
+              @click="addNewModal = true"
+              slot="reference"
+              type="button"
+              class="btn btn-outline-white btn-rounded btn-sm px-2"
+            >
+              <i class="fas fa-plus mt-0 fa-2x"></i>
+              <show-at breakpoint="mediumAndAbove">
+                <b class="h6">ASSIGNMENT</b>
+              </show-at>
+            </button>
+          </mdb-tooltip>
+        </div>
+        <div class="text-white col-6">
+          <a href="" class="white-text mx-3 h4">Assigned Chores</a>
+          <br />
+          <br />
+          <show-at breakpoint="largeAndAbove">
+            <div style="line-height:1.5em;">
+              <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
+              |
+              <a class="filter-link" @click="changeVisibility('you')">Assigned To You</a>
+              |
+              <a class="filter-link" @click="changeVisibility('completed')">Finished</a>
+            </div>
+          </show-at>
+        </div>
+        <div class="col-3">
+          <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+            <i class="fas fa-pencil-alt mt-0"></i>
+            <show-at breakpoint="mediumAndAbove">
+              <b class="h6">UPDATE</b>
+            </show-at>
+          </button>
           <button
-            @click="addNewModal = true"
-            slot="reference"
+            @click="completeAssignment(selected)"
             type="button"
             class="btn btn-outline-white btn-rounded btn-sm px-2"
           >
-            <i class="fas fa-plus mt-0 fa-2x"></i>
-            <b class="h6"> ASSIGNMENT</b>
+            <i class="fas fa-times mt-0"></i>
+            <show-at breakpoint="mediumAndAbove">
+              <b class="h6">COMPLETE</b>
+            </show-at>
           </button>
-        </mdb-tooltip>
-      </mdb-col>
-      <mdb-col md="6" class="text-white">
-        <a href="" class="white-text mx-3 h4">Assigned Chores</a>
-        <br />
-        <br />
-        <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
-        |
-        <a class="filter-link" @click="changeVisibility('you')">Assigned To You</a>
-        |
-        <a class="filter-link" @click="changeVisibility('completed')">Finished</a>
-      </mdb-col>
-      <mdb-col md="3">
-        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
-          <i class="fas fa-pencil-alt mt-0"></i>
-        </button>
-        <button
-          @click="completeAssignment(selected)"
-          type="button"
-          class="btn btn-outline-white btn-rounded btn-sm px-2"
-        >
-          <i class="fas fa-times mt-0"></i>
-        </button>
-      </mdb-col>
+        </div>
+      </div>
+      <div class="row text-white d-flex justify-content-center align-items-center text-center">
+        <show-at breakpoint="mediumAndBelow">
+          <div class="text-center" style="line-height:1.5em;">
+            <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
+            |
+            <a class="filter-link" @click="changeVisibility('you')">Assigned To You</a>
+            |
+            <a class="filter-link" @click="changeVisibility('completed')">Finished</a>
+          </div>
+        </show-at>
+      </div>
     </div>
     <!--/Card image-->
   </div>
@@ -116,9 +141,11 @@ import axios from "axios";
 import Datepicker from "vuejs-datepicker";
 import { format } from "date-fns";
 import { mdbTooltip, mdbBtn, mdbModal, mdbModalHeader, mdbCol, mdbModalBody, mdbModalFooter, mdbRow } from "mdbvue";
+import { showAt } from "vue-breakpoints";
 
 export default {
   components: {
+    showAt,
     mdbTooltip,
     mdbBtn,
     mdbModal,

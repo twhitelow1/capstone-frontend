@@ -8,7 +8,7 @@
     position="top"
     dark
   >
-    <mdb-navbar-brand class="">Chore Tracker</mdb-navbar-brand>
+    <mdb-navbar-brand class="h1"><b style="font-size:1.5em;">Chore Tracker</b></mdb-navbar-brand>
     <mdb-navbar-toggler target="nav-collapse">
       <mdb-navbar-nav right>
         <mdb-nav-item href="/" waves-fixed>Dashboard</mdb-nav-item>
@@ -24,7 +24,7 @@ import { mdbNavbar, mdbNavItem, mdbNavbarNav, mdbNavbarToggler, mdbNavbarBrand }
 
 export default {
   methods: {
-    isLoggedIn: function() {
+    isLoggedIn: function () {
       return localStorage.getItem("jwt");
     },
   },
