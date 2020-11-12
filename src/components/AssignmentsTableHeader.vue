@@ -168,6 +168,7 @@ export default {
   methods: {
     changeVisibility: function (handle) {
       this.$store.commit("changeVisibility", handle);
+      this.$store.commit("filterAssignments");
     },
     indexUsers: function () {
       axios.get("/api/users").then((response) => {
