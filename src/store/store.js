@@ -38,7 +38,6 @@ export const store = new Vuex.Store({
       state.filteredAssignments = state.filters[state.visibility](state.assignments);
     },
     changeVisibility(state, visibility) {
-      console.log("hello from changeVisibility: " + visibility);
       state.visibility = visibility;
     },
   },

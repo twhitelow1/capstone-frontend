@@ -63,7 +63,7 @@
       class="view view-cascade default-color-dark narrower w-100 p-3 mx-0 mb-3 d-flex justify-content-between align-items-center"
       style="border-radius:5px 5px 0 0;"
     >
-      <div>
+      <mdb-col md="3">
         <mdb-tooltip trigger="hover" :options="{ placement: 'right' }">
           <span slot="tip">Add A New Assignment</span>
           <button
@@ -72,23 +72,25 @@
             type="button"
             class="btn btn-outline-white btn-rounded btn-sm px-2"
           >
-            <i class="fas fa-plus mt-0"></i>
+            <i class="fas fa-plus mt-0 fa-2x"></i>
+            <b class="h6"> ASSIGNMENT</b>
           </button>
         </mdb-tooltip>
         <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
             <i class="fas fa-columns mt-0"></i>
           </button> -->
-      </div>
-      <div class="flex-column text-white">
+      </mdb-col>
+      <mdb-col md="6" class="text-white">
         <a href="" class="white-text mx-3 h4">Assigned Chores</a>
+        <br />
         <br />
         <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
         |
         <a class="filter-link" @click="changeVisibility('you')">Assigned To You</a>
         |
         <a class="filter-link" @click="changeVisibility('completed')">Finished</a>
-      </div>
-      <div>
+      </mdb-col>
+      <mdb-col md="3">
         <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
           <i class="fas fa-pencil-alt mt-0"></i>
         </button>
@@ -99,10 +101,10 @@
         >
           <i class="fas fa-times mt-0"></i>
         </button>
-        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+        <!-- <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
           <i class="fas fa-info-circle mt-0"></i>
-        </button>
-      </div>
+        </button> -->
+      </mdb-col>
     </div>
     <!--/Card image-->
   </div>
