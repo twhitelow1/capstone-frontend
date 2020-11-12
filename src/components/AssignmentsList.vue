@@ -26,7 +26,7 @@
             </mdb-tbl-head>
 
             <mdb-tbl-body>
-              <tr v-for="assignment in filteredAssignments" :key="`assign-${assignment.id}`" scope="row">
+              <tr v-for="assignment in filteredAssignments" @addAssignment="filteredAssignments" :key="`assign-${assignment.id}`" scope="row">
                 <th scope="row">
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" :id="`ck${assignment.id}`" />

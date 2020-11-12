@@ -14,11 +14,14 @@
     "bootstrap-vue": "^2.19.0",
     "core-js": "^3.6.5",
     "date-fns": "^2.16.1",
+    "git-tags-remote": "^1.0.3",
+    "jquery": "^3.5.1",
     "mdbvue": "6.7.1",
     "reset-css": "^5.0.1",
     "vue": "^2.6.12",
     "vue-router": "^3.2.0",
-    "vuejs-datepicker": "^1.6.2"
+    "vuejs-datepicker": "^1.6.2",
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -33,7 +36,7 @@
     "node-sass": "^4.9.0",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.0",
-    "vue-cli-plugin-mdb": "~2.1.0",
+    "vue-cli-plugin-mdb": "^2.1.0",
     "vue-template-compiler": "^2.6.11"
   }
 }

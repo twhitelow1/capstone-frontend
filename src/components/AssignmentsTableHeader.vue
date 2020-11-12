@@ -117,13 +117,13 @@ import Datepicker from "vuejs-datepicker";
 import { format } from "date-fns";
 import { mdbTooltip, mdbBtn, mdbModal, mdbModalHeader, mdbCol, mdbModalBody, mdbModalFooter, mdbRow } from "mdbvue";
 
-const filters = {
-  all: (assignments) => !assignments.completed,
-  you: (assignments) =>
-    assignments.filter((assignment) => !assignment.completed).filter((assignment) => assignment.user_id === 1),
-  completed: (assignments) =>
-    assignments.filter((assignment) => assignment.completed).filter((assignment) => assignment.user_id !== 1),
-};
+// const filters = {
+//   all: (assignments) => !assignments.completed,
+//   you: (assignments) =>
+//     assignments.filter((assignment) => !assignment.completed).filter((assignment) => assignment.user_id === 1),
+//   completed: (assignments) =>
+//     assignments.filter((assignment) => assignment.completed).filter((assignment) => assignment.user_id !== 1),
+// };
 
 export default {
   components: {
@@ -160,11 +160,6 @@ export default {
   created: function () {
     this.indexUsers();
   },
-  computed: {
-    filteredAssignments: function () {
-      return filters[this.visibility](this.assignments);
-    },
-  },
   methods: {
     changeVisibility: function (handle) {
       return (this.visibility = handle);
@@ -188,11 +183,14 @@ export default {
         .then((response) => {
           this.addNewModal = false;
           console.log("assignments create", response);
-          this.filteredAssignments();
+          this.addAssignment();
         })
         .catch((error) => {
           console.log("assignments create error", error.response);
         });
+    },
+    addAssignment() {
+      this.$emit("addAssignment");
     },
   },
 };
