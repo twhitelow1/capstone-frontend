@@ -2,65 +2,55 @@
   <div class="left-navigation pt-3 grey lighten-5">
     <div>
       <img
-        src="https://todd.whitelow.tech/img/todd-face-square.png"
+        v-bind:src="currentUser.profile_img_url"
         alt="user profile image"
         class="img-fluid z-index mb-3 rounded-circle profile hoverable"
         style="max-width:70%"
       />
-      <h2 class="h2-responsive pb-2">{{ currentUser.first_name }}</h2>
+      <h2 class="h2-responsive pb-2">{{ currentUser.first_name }} {{ currentUser.last_name }}</h2>
       <h3 class="h3-responsive ">
         Points:
-        <span class="text-dark">5000</span>
+        <span class="text-dark">{{ currentUser.points }}</span>
       </h3>
     </div>
     <br />
     <div id="home-info">
-      <h4 class="h4-responsive">Home Information</h4>
-      <mdb-row class="py-2 px-xl-4 px-lg-3 px-md-2 justify-content-center">
-        <mdb-col col="1">
-          <i style="font-size: 2.3vw; font-weight: bold;" class="fas fa-location-arrow fa-2x" alt="Address Icon" />
-        </mdb-col>
-        <mdb-col col="9">
-          <p style="font-size: 1.4vw; font-weight: bold;">
-            2801 Basingdale
-            <br />
-            Vail, Co 81657
-          </p>
-        </mdb-col>
-      </mdb-row>
       <div class="px-4">
-        <h4 class="h4-responsive">Household Memebers</h4>
+        <mdb-card class="my-3">
+          <h3 class="h3-responsive py-3">Home Information</h3>
+          <mdb-row class="py-2 px-xl-4 px-lg-3 px-md-2 justify-content-center">
+            <mdb-col col="1">
+              <i style="font-size: 2.3vw; font-weight: bold;" class="fas fa-location-arrow fa-2x" alt="Address Icon" />
+            </mdb-col>
+            <mdb-col col="9">
+              <p style="font-weight: bold; font-size:18px;">
+                {{ currentUser.home.addr_street }} {{ currentUser.home.addr_unit }}
+                <br />
+                {{ currentUser.home.addr_city }} {{ currentUser.home.addr_state }} {{ currentUser.home.addr_zip }}
+              </p>
+            </mdb-col>
+          </mdb-row>
+        </mdb-card>
+      </div>
+      <div class="px-4">
         <div class="text-left flex-row">
           <mdb-card class="my-3">
-            <div class="row p-2 align-items-center">
+            <h3 class="h3-responsive text-center py-3 px-2">Household Memebers</h3>
+            <div v-for="(housemate, index) in currentUser.housemates" :key="index" class="row p-2 align-items-center">
               <div class="col">
                 <img
-                  src="https://todd.whitelow.tech/img/todd-face-square.png"
+                  :src="housemate.profile_img_url"
+                  :alt="`${housemate.first_name}'s profile picture`"
                   class="img-fluid justify-content-center z-index mb-3 rounded-circle profile hoverable"
                   style="max-width:100%;"
                 />
               </div>
               <div class="col-8">
-                <h4 class="h4-responsive mb-1">Kiya Law</h4>
+                <h4 class="h4-responsive mb-1" id="housemate-name">
+                  {{ housemate.first_name }} {{ housemate.last_name }}
+                </h4>
                 <h6 class="h6-responsive">(555) 555 - 5555</h6>
-                <h6 class="h6-responsive">2300 Points</h6>
-              </div>
-            </div>
-          </mdb-card>
-          <mdb-card class="my-3">
-            <div class="row p-2 align-items-center">
-              <div class="col">
-                <img
-                  src="https://todd.whitelow.tech/img/todd-face-square.png"
-                  class="img-fluid justify-content-center mt-2 z-index mb-3 rounded-circle profile hoverable"
-                  style="max-width:100%;"
-                />
-              </div>
-              <div class="col-8">
-                <h4 class="h4-responsive mb-1">Jason Grant</h4>
-                <h6 class="h6-responsive">(555) 555 - 5555</h6>
-                <h6 class="h6-responsive">4000 Points</h6>
-
+                <h6 class="h6-responsive">{{ housemate.points }} Points</h6>
               </div>
             </div>
           </mdb-card>
@@ -71,6 +61,9 @@
 </template>
 
 <style scoped>
+#housemate-name {
+  text-transform: capitalize;
+}
 i {
   color: #00695c;
 }
