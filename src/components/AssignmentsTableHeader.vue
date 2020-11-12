@@ -189,6 +189,8 @@ export default {
           this.addNewModal = false;
           console.log("assignments create", response);
           this.$store.commit("addAssignment", response.data);
+          this.$store.commit("filterAssignments");
+
           console.log(this.$store.state.assignments);
         })
         .catch((error) => {
