@@ -98,7 +98,7 @@ export default {
     mdbTblBody,
     mdbTooltip,
   },
-  data: function() {
+  data: function () {
     return {
       chores: [],
       currentAssignment: { user: {}, chore: {} },
@@ -108,25 +108,24 @@ export default {
       modal: false,
     };
   },
-  created: function() {
+  created: function () {
     this.indexChores();
-    this.indexUsers();
   },
   methods: {
-    indexChores: function() {
-      axios.get("/api/chores").then(response => {
+    indexChores: function () {
+      axios.get("/api/chores").then((response) => {
         console.log("chores index", response);
         this.chores = response.data;
       });
     },
-    showChore: function(chore) {
+    showChore: function (chore) {
       this.currentChore = chore;
       this.modal = true;
     },
-    getCompletedAssignments: function() {
+    getCompletedAssignments: function () {
       this.indexAssignments();
     },
-    createChore: function() {
+    createChore: function () {
       var params = {
         title: this.newChoreTitle,
         desc: this.newChoreDesc,
@@ -137,19 +136,13 @@ export default {
       };
       axios
         .post("/api/chores", params)
-        .then(response => {
+        .then((response) => {
           this.$router.push("/chores");
           console.log("chores create", response);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("chores create error", error.response);
         });
-    },
-    indexUsers: function() {
-      axios.get("/api/users").then(response => {
-        console.log("users index", response);
-        this.users = response.data;
-      });
     },
   },
 };
