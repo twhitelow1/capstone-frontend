@@ -92,7 +92,11 @@
         <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
           <i class="fas fa-pencil-alt mt-0"></i>
         </button>
-        <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
+        <button
+          @click="completeAssignment(selected)"
+          type="button"
+          class="btn btn-outline-white btn-rounded btn-sm px-2"
+        >
           <i class="fas fa-times mt-0"></i>
         </button>
         <button type="button" class="btn btn-outline-white btn-rounded btn-sm px-2">
@@ -140,6 +144,7 @@ export default {
   props: {
     chores: Array,
     currentUser: Object,
+    selected: Array,
   },
   data: function () {
     return {
@@ -192,6 +197,24 @@ export default {
     },
     addAssignment: function (event) {
       alert(event.target.value);
+    },
+    completeAssignment: function (assignments) {
+      const params = {
+        assignments,
+      };
+      console.log(`params: ${params}`);
+      console.log(`checked assignments: ${this.selected}`);
+      axios
+        .patch("/api/assignments/completed", params)
+        .then((response) => {
+          // this.completeModal = false;
+          console.log("assignment completed", response);
+          // this.$store.commit("completeAssignment", response.data);
+          // console.log(this.$store.state.assignments);
+        })
+        .catch((error) => {
+          console.log("assignments create error", error.response);
+        });
     },
   },
 };

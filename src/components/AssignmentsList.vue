@@ -5,6 +5,7 @@
         v-bind:chores="chores"
         v-bind:assignments="assignments"
         v-bind:currentUser="currentUser"
+        v-bind:selected="selected"
       />
       <div class="px-4">
         <div class="table-wrapper">
@@ -237,14 +238,6 @@ export default {
     },
   },
   methods: {
-    tableAssignments: function (assignments) {
-      const results = [];
-      assignments.each((assignment) => {
-        results.push({ name: assignment.user.id });
-      });
-      console.log("tableAssignments results:" + results);
-      return results;
-    },
     getCompletedAssignments: function () {
       this.indexAssignments();
     },
