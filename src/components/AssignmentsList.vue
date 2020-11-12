@@ -14,7 +14,7 @@
               <tr>
                 <th>
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1" />
+                    <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1" v-model="selectAll" />
                     <label class="custom-control-label" for="tableDefaultCheck1"></label>
                   </div>
                 </th>
@@ -29,7 +29,14 @@
               <tr v-for="assignment in this.$store.state.assignments" :key="`assign-${assignment.id}`" scope="row">
                 <th scope="row">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" :id="`ck${assignment.id}`" />
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      :id="`ck${assignment.id}`"
+                      :value="assignment.id"
+                      v-model="selected"
+                      number
+                    />
                     <label class="custom-control-label" :for="`ck${assignment.id}`"></label>
                   </div>
                 </th>
@@ -196,7 +203,7 @@ export default {
   },
   data: function () {
     return {
-      assignments: [],
+      assignments: this.$store.state.assignments,
       currentAssignment: { user: {}, chore: {} },
       parseISO,
       grabbedUser: {},
@@ -205,10 +212,29 @@ export default {
       visibility: "active",
       modal: false,
       addNewModal: false,
+      selected: [],
     };
   },
   created: function () {
     this.indexAssignments();
+  },
+  computed: {
+    selectAll: {
+      get: function () {
+        return this.assignments ? this.selected.length == this.assignments.length : false;
+      },
+      set: function (value) {
+        let selected = [];
+
+        if (value) {
+          this.assignments.forEach(function (assignment) {
+            selected.push(assignment.id);
+          });
+        }
+
+        this.selected = selected;
+      },
+    },
   },
   methods: {
     tableAssignments: function (assignments) {
