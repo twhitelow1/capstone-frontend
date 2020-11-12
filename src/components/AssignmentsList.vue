@@ -1,7 +1,11 @@
 <template>
   <div class="assignments-list pt-5">
     <div class="card card-cascade narrower">
-      <AssignmentsTableHeader v-bind:chores="chores" />
+      <AssignmentsTableHeader
+        v-bind:chores="chores"
+        v-bind:assignments="assignments"
+        v-bind:currentUser="currentUser"
+      />
       <div class="px-4">
         <div class="table-wrapper">
           <!--Table-->
@@ -174,9 +178,9 @@ import {
 } from "mdbvue";
 
 const filters = {
-  all: assignments => assignments,
-  active: assignments => assignments.filter(assignment => !assignment.completed),
-  completed: assignments => assignments.filter(assignment => assignment.completed),
+  all: (assignments) => assignments,
+  active: (assignments) => assignments.filter((assignment) => !assignment.completed),
+  completed: (assignments) => assignments.filter((assignment) => assignment.completed),
 };
 
 export default {
@@ -194,8 +198,9 @@ export default {
   },
   props: {
     chores: Array,
+    currentUser: Object,
   },
-  data: function() {
+  data: function () {
     return {
       assignments: [],
       currentAssignment: { user: {}, chore: {} },
@@ -208,35 +213,35 @@ export default {
       addNewModal: false,
     };
   },
-  created: function() {
+  created: function () {
     this.indexAssignments();
   },
   computed: {
-    filteredAssignments: function() {
+    filteredAssignments: function () {
       return filters[this.visibility](this.assignments);
     },
   },
   methods: {
-    tableAssignments: function(assignments) {
+    tableAssignments: function (assignments) {
       const results = [];
-      assignments.each(assignment => {
+      assignments.each((assignment) => {
         results.push({ name: assignment.user.id });
       });
       console.log("tableAssignments results:" + results);
       return results;
     },
-    getCompletedAssignments: function() {
+    getCompletedAssignments: function () {
       this.indexAssignments();
     },
-    changeVisibility: function(handle) {
+    changeVisibility: function (handle) {
       return (this.visibility = handle);
     },
-    showAssignment: function(assignment) {
+    showAssignment: function (assignment) {
       this.currentAssignment = assignment;
       document.querySelector("#assignment-details").showModal();
     },
-    indexAssignments: function() {
-      axios.get("/api/assignments").then(response => {
+    indexAssignments: function () {
+      axios.get("/api/assignments").then((response) => {
         console.log("asignments index", response);
         this.assignments = response.data;
       });

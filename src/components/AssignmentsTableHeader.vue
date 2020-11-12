@@ -29,8 +29,12 @@
           <mdb-col class="d-flex justify-content-end p-0">
             <select class="custom-select" name="select-user" id="select-user" v-model="newAssignmentUserId">
               <option disabled>Select House Member</option>
-              <option v-for="(member, index) in houseMembers" :key="`mem${index}`" :value="`${member.id}`">
-                {{ member }}
+              <option
+                v-for="(housemate, index) in currentUser.housemates"
+                :key="`mem${index}`"
+                :value="`${housemate.id}`"
+              >
+                {{ housemate.first_name }}
               </option>
             </select>
           </mdb-col>
@@ -114,15 +118,11 @@ import { format } from "date-fns";
 import { mdbTooltip, mdbBtn, mdbModal, mdbModalHeader, mdbCol, mdbModalBody, mdbModalFooter, mdbRow } from "mdbvue";
 
 const filters = {
-  all: assignments => !assignments.completed,
-  you: assignments =>
-    assignments
-      .filter(assignment => !assignment.completed)
-      .filter(assignment => assignment.user_id === this.currentUserId),
-  completed: assignments =>
-    assignments
-      .filter(assignment => assignment.completed)
-      .filter(assignment => assignment.user_id !== this.currentUserId),
+  all: (assignments) => !assignments.completed,
+  you: (assignments) =>
+    assignments.filter((assignment) => !assignment.completed).filter((assignment) => assignment.user_id === 1),
+  completed: (assignments) =>
+    assignments.filter((assignment) => assignment.completed).filter((assignment) => assignment.user_id !== 1),
 };
 
 export default {
@@ -139,49 +139,58 @@ export default {
   },
   props: {
     chores: Array,
+    currentUser: Object,
   },
-  data: function() {
+  data: function () {
     return {
       assignments: [],
+      users: [],
       houseMembers: ["Todd", "Kiya"],
       newAssignmentUserId: 0,
       newAssignmentChoreId: 0,
-      newAssignmentAssignerId: 1,
+      newAssignmentAssignerId: this.currentUser.id,
       newAssignmentDueDate: new Date(),
       format,
       completedAssignments: {},
       visibility: "active",
       modal: false,
       addNewModal: false,
-      currentUserId: 1,
     };
   },
+  created: function () {
+    this.indexUsers();
+  },
   computed: {
-    filteredAssignments: function() {
+    filteredAssignments: function () {
       return filters[this.visibility](this.assignments);
     },
   },
   methods: {
-    changeVisibility: function(handle) {
+    changeVisibility: function (handle) {
       return (this.visibility = handle);
     },
-    createAssignments: function() {
-      var params = {
+    indexUsers: function () {
+      axios.get("/api/users").then((response) => {
+        console.log("users index", response);
+        this.users = response.data;
+      });
+    },
+    createAssignments: function () {
+      const params = {
         user_id: this.newAssignmentUserId,
-        chore_id: this.newAssignmentId,
+        chore_id: this.newAssignmentChoreId,
         due_date: this.newAssignmentDueDate,
-        assigner_id: this.newAssignmentAssignerId,
+        assigner_id: this.currentUser.id,
       };
       console.log(`params: ${params}`);
       axios
         .post("/api/assignments", params)
-        .then(response => {
+        .then((response) => {
           this.addNewModal = false;
-          this.$router.push("/");
           console.log("assignments create", response);
           this.filteredAssignments();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("assignments create error", error.response);
         });
     },

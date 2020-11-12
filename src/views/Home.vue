@@ -1,12 +1,12 @@
 <template>
   <mdb-row class="home m-0 grey lighten-2" style="min-height:inherit;">
     <mdb-col sm="3" class="p-0">
-      <LeftNavigation />
+      <LeftNavigation v-bind:currentUser="currentUser" />
     </mdb-col>
     <mdb-col sm="9">
       <mdb-row>
         <mdb-col>
-          <AssignmentsList v-bind:chores="chores" />
+          <AssignmentsList v-bind:chores="chores" v-bind:currentUser="currentUser" />
         </mdb-col>
       </mdb-row>
       <mdb-row>
@@ -46,9 +46,9 @@ import LeftNavigation from "../components/LeftNavigation";
 import { mdbCol, mdbRow } from "mdbvue";
 
 const filters = {
-  all: assignments => assignments,
-  active: assignments => assignments.filter(assignment => !assignment.completed),
-  completed: assignments => assignments.filter(assignment => assignment.completed),
+  all: (assignments) => assignments,
+  active: (assignments) => assignments.filter((assignment) => !assignment.completed),
+  completed: (assignments) => assignments.filter((assignment) => assignment.completed),
 };
 
 export default {
@@ -59,10 +59,11 @@ export default {
     LeftNavigation,
     ChoresList,
   },
-  data: function() {
+  data: function () {
     return {
       chores: [],
       users: [],
+      currentUser: {},
       assignments: [],
       currentAssignment: { user: {}, chore: {} },
       currentChore: { room: {} },
@@ -73,28 +74,35 @@ export default {
       visibility: this.checkVisibility(),
     };
   },
-  created: function() {
+  created: function () {
     this.checkVisibility();
     this.indexChores();
+    this.getCurrentUser();
   },
-  mounted: function() {
+  mounted: function () {
     this.checkVisibility();
   },
   computed: {
-    filteredAssignments: function() {
+    filteredAssignments: function () {
       return filters[this.visibility](this.assignments);
     },
   },
   methods: {
-    checkVisibility: function() {
+    checkVisibility: function () {
       if (this.$route.query.visibility) {
         this.visibility = this.$route.query.visibility;
       }
     },
-    indexChores: function() {
-      axios.get("/api/chores").then(response => {
+    indexChores: function () {
+      axios.get("/api/chores").then((response) => {
         console.log("chores index", response);
         this.chores = response.data;
+      });
+    },
+    getCurrentUser: function () {
+      axios.get("/api/users/current").then((response) => {
+        console.log("current user", response);
+        this.currentUser = response.data;
       });
     },
   },
