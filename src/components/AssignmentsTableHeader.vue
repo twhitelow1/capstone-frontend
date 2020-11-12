@@ -167,7 +167,7 @@ export default {
   },
   methods: {
     changeVisibility: function (handle) {
-      return (this.visibility = handle);
+      this.$store.commit("changeVisibility", handle);
     },
     indexUsers: function () {
       axios.get("/api/users").then((response) => {

@@ -7,13 +7,13 @@ export const store = new Vuex.Store({
   state: {
     assignments: [],
     filteredAssignments: [],
-    visibility: "all",
+    visibility: "you",
     filters: {
       all: assignments => assignments.filter(assignments => !assignments.completed),
       you: assignments =>
-        assignments.filter(assignment => !assignment.completed).filter(assignment => assignment.user_id === 1),
+        assignments.filter(assignment => !assignment.completed).filter(assignment => assignment.user.id === 1),
       completed: assignments =>
-        assignments.filter(assignment => assignment.completed).filter(assignment => assignment.user_id !== 1),
+        assignments.filter(assignment => assignment.completed).filter(assignment => assignment.user.id !== 1),
     },
   },
   mutations: {
