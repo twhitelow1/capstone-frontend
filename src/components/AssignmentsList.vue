@@ -27,7 +27,11 @@
             </mdb-tbl-head>
 
             <mdb-tbl-body>
-              <tr v-for="assignment in this.$store.state.assignments" :key="`assign-${assignment.id}`" scope="row">
+              <tr
+                v-for="assignment in this.$store.state.filteredAssignments"
+                :key="`assign-${assignment.id}`"
+                scope="row"
+              >
                 <th scope="row">
                   <div class="custom-control custom-checkbox">
                     <input
@@ -242,7 +246,7 @@ export default {
       this.indexAssignments();
     },
     changeVisibility: function (handle) {
-      return (this.visibility = handle);
+      this.$store.commit("changeVisibility", handle);
     },
     showAssignment: function (assignment) {
       this.currentAssignment = assignment;
@@ -253,6 +257,7 @@ export default {
         console.log("asignments index", response);
         this.assignments = response.data;
         this.$store.commit("loadAssignments", response.data);
+        this.$store.commit("filterAssignments");
         console.log(`store assignments ${this.$store.state.assignments}`);
       });
     },

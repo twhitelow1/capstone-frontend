@@ -157,7 +157,7 @@ export default {
       newAssignmentDueDate: new Date(),
       format,
       completedAssignments: {},
-      visibility: "active",
+      visibility: "you",
       modal: false,
       addNewModal: false,
     };
@@ -209,6 +209,7 @@ export default {
         .then((response) => {
           console.log("assignment completed", response);
           this.$store.commit("completeAssignments", assignments);
+          this.$store.commit("filterAssignments");
         })
         .catch((error) => {
           console.log("assignments create error", error.response);

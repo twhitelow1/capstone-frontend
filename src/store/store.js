@@ -3,17 +3,18 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-// const filters = {
-//   all: (assignments) => !assignments.completed,
-//   you: (assignments) =>
-//     assignments.filter((assignment) => !assignment.completed).filter((assignment) => assignment.user_id === 1),
-//   completed: (assignments) =>
-//     assignments.filter((assignment) => assignment.completed).filter((assignment) => assignment.user_id !== 1),
-// };
-
 export const store = new Vuex.Store({
   state: {
     assignments: [],
+    filteredAssignments: [],
+    visibility: "all",
+    filters: {
+      all: assignments => assignments.filter(assignments => !assignments.completed),
+      you: assignments =>
+        assignments.filter(assignment => !assignment.completed).filter(assignment => assignment.user_id === 1),
+      completed: assignments =>
+        assignments.filter(assignment => assignment.completed).filter(assignment => assignment.user_id !== 1),
+    },
   },
   mutations: {
     addAssignment(state, assignment) {
@@ -33,8 +34,15 @@ export const store = new Vuex.Store({
         });
       });
     },
+    filterAssignments: function (state) {
+      state.filteredAssignments = state.filters[state.visibility](state.assignments);
+    },
+    changeVisibility(state, visibility) {
+      state.visibility = visibility;
+    },
   },
   getters: {
     assignments: state => state.assignments,
+    visibility: state => state.visibility,
   },
 });
