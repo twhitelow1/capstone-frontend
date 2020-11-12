@@ -26,7 +26,7 @@
             </mdb-tbl-head>
 
             <mdb-tbl-body>
-              <tr v-for="assignment in filteredAssignments" @addAssignment="filteredAssignments" :key="`assign-${assignment.id}`" scope="row">
+              <tr v-for="assignment in this.$store.state.assignments" :key="`assign-${assignment.id}`" scope="row">
                 <th scope="row">
                   <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" :id="`ck${assignment.id}`" />
@@ -177,12 +177,6 @@ import {
   mdbTblBody,
 } from "mdbvue";
 
-const filters = {
-  all: (assignments) => assignments,
-  active: (assignments) => assignments.filter((assignment) => !assignment.completed),
-  completed: (assignments) => assignments.filter((assignment) => assignment.completed),
-};
-
 export default {
   components: {
     mdbModal,
@@ -216,11 +210,6 @@ export default {
   created: function () {
     this.indexAssignments();
   },
-  computed: {
-    filteredAssignments: function () {
-      return filters[this.visibility](this.assignments);
-    },
-  },
   methods: {
     tableAssignments: function (assignments) {
       const results = [];
@@ -244,6 +233,8 @@ export default {
       axios.get("/api/assignments").then((response) => {
         console.log("asignments index", response);
         this.assignments = response.data;
+        this.$store.commit("loadAssignments", response.data);
+        console.log(`store assignments ${this.$store.state.assignments}`);
       });
     },
   },

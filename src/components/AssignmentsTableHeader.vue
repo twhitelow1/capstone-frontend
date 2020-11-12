@@ -183,14 +183,15 @@ export default {
         .then((response) => {
           this.addNewModal = false;
           console.log("assignments create", response);
-          this.addAssignment();
+          this.$store.commit("addAssignment", response.data);
+          console.log(this.$store.state.assignments);
         })
         .catch((error) => {
           console.log("assignments create error", error.response);
         });
     },
-    addAssignment() {
-      this.$emit("addAssignment");
+    addAssignment: function (event) {
+      alert(event.target.value);
     },
   },
 };
