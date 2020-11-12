@@ -54,7 +54,9 @@
                     <label class="custom-control-label" :for="`ck${assignment.id}`"></label>
                   </div>
                 </th>
-                <td class="align-middle assignment-row">{{ assignment.choreTitle }}</td>
+                <td class="align-middle assignment-row">
+                  <p>{{ assignment.choreTitle }}</p>
+                </td>
                 <td class="align-middle assignment-row">
                   <p>{{ assignment.first_name }}</p>
                 </td>
