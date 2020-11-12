@@ -22,6 +22,17 @@ export const store = new Vuex.Store({
     loadAssignments(state, assignments) {
       state.assignments = assignments;
     },
+    completeAssignments(state, assignments) {
+      assignments.forEach(assignmentId => {
+        console.log(`show assignment id: ${assignmentId}`);
+        state.assignments.forEach(assignment => {
+          if (assignment.id === assignmentId) {
+            assignment.completed = true;
+            assignment.completed_date = new Date();
+          }
+        });
+      });
+    },
   },
   getters: {
     assignments: state => state.assignments,

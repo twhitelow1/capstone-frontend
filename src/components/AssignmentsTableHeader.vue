@@ -207,10 +207,8 @@ export default {
       axios
         .patch("/api/assignments/completed", params)
         .then((response) => {
-          // this.completeModal = false;
           console.log("assignment completed", response);
-          // this.$store.commit("completeAssignment", response.data);
-          // console.log(this.$store.state.assignments);
+          this.$store.commit("completeAssignments", assignments);
         })
         .catch((error) => {
           console.log("assignments create error", error.response);
