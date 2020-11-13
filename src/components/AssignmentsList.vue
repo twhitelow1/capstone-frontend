@@ -346,13 +346,12 @@ export default {
       };
       console.log(`params: ${params}`);
       axios
-        .patch("/api/assignments", params)
+        .patch("/api/assignments/" + assignment.id, params)
         .then((response) => {
           this.modal = false;
           console.log("assignments create", response);
-          this.$store.commit("addAssignment", response.data);
+          this.$store.commit("updateAssignment", response.data);
           this.$store.commit("filterAssignments");
-
           console.log(this.$store.state.assignments);
         })
         .catch((error) => {

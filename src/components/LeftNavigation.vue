@@ -24,7 +24,7 @@
             </mdb-col>
             <mdb-col col="9">
               <p style="font-weight: bold; font-size:18px;">
-                {{ currentUser.home.addr_street }} {{ currentUser.home.addr_unit }}
+                <!-- {{ currentUser.home.addr_street }} {{ currentUser.home.addr_unit }} -->
                 <br />
                 {{ currentUser.home.addr_city }} {{ currentUser.home.addr_state }} {{ currentUser.home.addr_zip }}
               </p>
@@ -93,6 +93,7 @@ img.profile {
 
 <script>
 import { mdbRow, mdbCol, mdbCard } from "mdbvue";
+import axios from "axios";
 
 export default {
   components: {
@@ -102,6 +103,24 @@ export default {
   },
   props: {
     currentUser: { home: {} },
+  },
+  data: function () {
+    return {
+      home: {},
+    };
+  },
+  created: function () {
+    this.getHome(this.currentUser.home);
+  },
+  methods: {
+    getHome: function (home) {
+      axios.get("/api/homes/" + home.id).then((response) => {
+        console.log("home show", response.data);
+        this.home = response.data;
+        // this.$store.commit("loadAssignments", response.data);
+        // this.$store.commit("filterAssignments");
+      });
+    },
   },
 };
 </script>

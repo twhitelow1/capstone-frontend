@@ -54,8 +54,8 @@
         </mdb-row>
       </mdb-modal-body>
       <mdb-modal-footer>
-        <mdb-btn color="secondary" @click.native="addNewModal = false">Close</mdb-btn>
-        <mdb-btn color="primary" @click.native="createAssignments">Assign Chore</mdb-btn>
+        <mdb-btn color="secondary" @click="addNewModal = false">Close</mdb-btn>
+        <mdb-btn color="primary" @click="createAssignments">Assign Chore</mdb-btn>
       </mdb-modal-footer>
     </mdb-modal>
     <!--Card image-->
@@ -73,7 +73,7 @@
             class="btn btn-outline-white btn-rounded btn-sm px-2"
           >
             <i class="fas fa-plus mt-0 fa-2x"></i>
-            <show-at breakpoint="mediumAndAbove">
+            <show-at breakpoint="medium">
               <b class="h6" vertical-align> ASSIGNMENT</b>
             </show-at>
           </button>
@@ -83,7 +83,7 @@
         <a href="" class="white-text mx-3 h4">Assigned Chores</a>
         <br />
         <br />
-        <show-at breakpoint="largeAndAbove">
+        <show-at breakpoint="large">
           <div style="line-height:1.5em;">
             <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
             |
@@ -97,15 +97,12 @@
         <mdb-tooltip trigger="hover" :options="{ placement: 'left' }">
           <span slot="tip">Complete Assignment</span>
           <button
-            @click-native="completeAssignment(selected)"
+            @click="completeAssignment(selected)"
             type="button"
             class="btn btn-outline-white btn-rounded btn-sm px-2"
             slot="reference"
           >
             <i class="fas fa-times mt-0 fa-2x vertical-align"></i>
-            <show-at breakpoint="mediumAndAbove">
-              <b class="h6 vertical-align"> COMPLETE</b>
-            </show-at>
           </button>
         </mdb-tooltip>
       </div>

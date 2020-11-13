@@ -20,6 +20,13 @@ export const store = new Vuex.Store({
     addAssignment(state, assignment) {
       state.assignments.push(assignment);
     },
+    updateAssignment(state, assignment) {
+      state.assignments.forEach(assign => {
+        if (assign.id === assignment.id) {
+          assign = assignment;
+        }
+      });
+    },
     loadAssignments(state, assignments) {
       state.assignments = assignments;
     },
