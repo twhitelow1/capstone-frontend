@@ -97,7 +97,7 @@
         <mdb-tooltip trigger="hover" :options="{ placement: 'left' }">
           <span slot="tip">Complete Assignment</span>
           <button
-            @click="completeAssignment(selected)"
+            @click-native="completeAssignment(selected)"
             type="button"
             class="btn btn-outline-white btn-rounded btn-sm px-2"
             slot="reference"
@@ -109,18 +109,6 @@
           </button>
         </mdb-tooltip>
       </div>
-
-      <!-- <div class="row text-white d-flex justify-content-center align-items-center text-center">
-        <show-at breakpoint="mediumAndBelow">
-          <div class="text-center" style="line-height:1.5em;">
-            <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
-            |
-            <a class="filter-link" @click="changeVisibility('you')">Assigned To You</a>
-            |
-            <a class="filter-link" @click="changeVisibility('completed')">Finished</a>
-          </div>
-        </show-at>
-      </div> -->
     </div>
     <!--/Card image-->
   </div>
@@ -212,28 +200,6 @@ export default {
     },
     addAssignment: function (event) {
       alert(event.target.value);
-    },
-    updateAssignment: function (assignment) {
-      const params = {
-        user_id: assignment.user_id,
-        chore_id: this.newAssignmentChoreId,
-        due_date: this.newAssignmentDueDate,
-        assigner_id: this.currentUser.id,
-      };
-      console.log(`params: ${params}`);
-      axios
-        .post("/api/assignments", params)
-        .then((response) => {
-          this.addNewModal = false;
-          console.log("assignments create", response);
-          this.$store.commit("addAssignment", response.data);
-          this.$store.commit("filterAssignments");
-
-          console.log(this.$store.state.assignments);
-        })
-        .catch((error) => {
-          console.log("assignments create error", error.response);
-        });
     },
     completeAssignment: function (assignments) {
       const params = {

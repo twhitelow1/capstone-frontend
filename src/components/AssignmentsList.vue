@@ -67,7 +67,11 @@
                   <p>{{ format(new Date(assignment.jsDate), "MM/dd/yyyy") }}</p>
                 </td>
                 <td class="align-middle">
-                  <button type="button" class="btn btn-outline-dark btn-rounded btn-sm px-2">
+                  <button
+                    @click="showAssignment(assignment)"
+                    type="button"
+                    class="btn btn-outline-dark btn-rounded btn-sm px-2"
+                  >
                     <i class="fas fa-pencil-alt mt-0"></i>
                   </button>
                 </td>
@@ -82,11 +86,45 @@
         <mdb-modal-title>Assignment Info</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body>
-        <p>Assigned To: {{ currentAssignment.user.first_name }}</p>
-        <p>Chore: {{ currentAssignment.chore.title }}</p>
-        <p>Date Due: {{ parseISO(currentAssignment.due_date) }}</p>
-        <p>Is Completed?: {{ currentAssignment.completed }}</p>
-        <p>Assigned By: {{ currentAssignment.assigner_id }}</p>
+        <mdb-col class="d-flex justify-content-end p-0">
+          <select class="custom-select" name="select-user" id="select-user" v-model="currentAssignment.user.id">
+            <option disabled>Assigned To</option>
+            <option
+              v-for="(housemate, index) in currentUser.housemates"
+              :key="`mem${index}`"
+              :value="`${housemate.id}`"
+            >
+              {{ housemate.first_name }}
+            </option>
+          </select>
+        </mdb-col>
+        <mdb-row class="align-items-center justify-content-between mb-2">
+          <mdb-col class="d-flex justify-content-start">
+            <label for="select-user">Chore:</label>
+          </mdb-col>
+          <mdb-col class="d-flex justify-content-end p-0">
+            <select class="custom-select" name="select-chore" id="select-chore" v-model="currentAssignment.chore_id">
+              <option disabled value="none">Select Chore</option>
+              <option v-for="(chore, index) in chores" :key="`m-${index}`" :value="`${chore.id}`">
+                {{ chore.title }}
+              </option>
+            </select>
+          </mdb-col>
+        </mdb-row>
+        <mdb-row class="align-items-center justify-content-between">
+          <mdb-col class="d-flex justify-content-start">
+            <label for="due-date ">Date Due:</label>
+          </mdb-col>
+          <mdb-col class="d-flex justify-content-end p-0">
+            <datepicker
+              placeholder="Select Date"
+              input-class="custom-select"
+              v-model="currentAssignment.due_date"
+              id="due-date"
+            ></datepicker>
+          </mdb-col>
+        </mdb-row>
+        <p class="capitalize">Assigned By: {{ currentAssignment.assigner.first_name }}</p>
       </mdb-modal-body>
       <mdb-modal-footer>
         <mdb-btn color="secondary" @click.native="modal = false">Close</mdb-btn>
@@ -94,7 +132,7 @@
       </mdb-modal-footer>
     </mdb-modal>
     <!-- Add  modal form from mdb here instead -->
-    <mdb-modal :show="updateAssignmentModal" @close="updateAssignmentModal = false" cascade>
+    <mdb-modal :show="currentAssignmentModal" @close="currentAssignmentModal = false" cascade>
       <mdb-modal-header class="default-color-dark white-text">
         <h4 class="title">
           <i class="fas fa-plus" />
@@ -107,7 +145,7 @@
             <label for="select-user">Chore:</label>
           </mdb-col>
           <mdb-col class="d-flex justify-content-end p-0">
-            <select class="custom-select" name="select-chore" id="select-chore" v-model="currentAssignmentChore">
+            <select class="custom-select" name="select-chore" id="select-chore" v-model="currentAssignment.chore_id">
               <option disabled value="none">Select Chore</option>
               <option v-for="(chore, index) in chores" :key="`m-${index}`" :value="`${chore.id}`">
                 {{ chore.title }}
@@ -120,7 +158,7 @@
             <label for="select-user">Assign To:</label>
           </mdb-col>
           <mdb-col class="d-flex justify-content-end p-0">
-            <select class="custom-select" name="select-user" id="select-user" v-model="newAssignmentUserId">
+            <select class="custom-select" name="select-user" id="select-user" v-model="currentAssignment.user_id">
               <option disabled>Select House Member</option>
               <option
                 v-for="(housemate, index) in currentUser.housemates"
@@ -140,15 +178,15 @@
             <datepicker
               placeholder="Select Date"
               input-class="custom-select"
-              v-model="newAssignmentDueDate"
+              v-model="currentAssignment.due_date"
               id="due-date"
             ></datepicker>
           </mdb-col>
         </mdb-row>
       </mdb-modal-body>
       <mdb-modal-footer>
-        <mdb-btn color="secondary" @click.native="addNewModal = false">Close</mdb-btn>
-        <mdb-btn color="primary" @click.native="createAssignments">Assign Chore</mdb-btn>
+        <mdb-btn color="secondary" @click.native="currentAssignmentModal = false">Close</mdb-btn>
+        <mdb-btn color="primary" @click.native="updateAssignment(currentAssignment)">Assign Chore</mdb-btn>
       </mdb-modal-footer>
     </mdb-modal>
   </div>
@@ -296,7 +334,7 @@ export default {
   data: function () {
     return {
       assignments: this.$store.state.assignments,
-      currentAssignment: { user: {}, chore: {} },
+      currentAssignment: { user: {}, chore: {}, assigner: {} },
       parseISO,
       grabbedUser: {},
       format,
@@ -305,7 +343,7 @@ export default {
       modal: false,
       addNewModal: false,
       selected: [],
-      updateAssignmentModal: false,
+      currentAssignmentModal: false,
     };
   },
   created: function () {
@@ -338,7 +376,7 @@ export default {
     },
     showAssignment: function (assignment) {
       this.currentAssignment = assignment;
-      document.querySelector("#assignment-details").showModal();
+      this.modal = true;
     },
     indexAssignments: function () {
       axios.get("/api/assignments").then((response) => {
@@ -348,6 +386,28 @@ export default {
         this.$store.commit("filterAssignments");
         console.log(`store assignments ${this.$store.state.assignments}`);
       });
+    },
+    updateAssignment: function (assignment) {
+      const params = {
+        user_id: assignment.user_id,
+        chore_id: assignment.chore_id,
+        due_date: assignment.due_date,
+        assigner_id: this.currentUser.id,
+      };
+      console.log(`params: ${params}`);
+      axios
+        .post("/api/assignments", params)
+        .then((response) => {
+          this.addNewModal = false;
+          console.log("assignments create", response);
+          this.$store.commit("addAssignment", response.data);
+          this.$store.commit("filterAssignments");
+
+          console.log(this.$store.state.assignments);
+        })
+        .catch((error) => {
+          console.log("assignments create error", error.response);
+        });
     },
   },
 };
