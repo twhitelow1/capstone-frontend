@@ -102,6 +102,7 @@ export default {
     getCurrentUser: function () {
       axios.get("/api/users/current").then((response) => {
         console.log("current user", response);
+        this.$store.commit("setCurrentUser", response.data);
         this.currentUser = response.data;
       });
     },
