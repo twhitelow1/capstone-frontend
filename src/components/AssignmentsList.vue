@@ -329,7 +329,7 @@ export default {
       this.modal = true;
     },
     indexAssignments: function () {
-      axios.get("/api/assignments").then((response) => {
+      axios.get("/api/assignments/" + ).then((response) => {
         console.log("asignments index", response);
         this.assignments = response.data;
         this.$store.commit("loadAssignments", response.data);
