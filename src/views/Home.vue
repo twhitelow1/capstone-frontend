@@ -6,7 +6,7 @@
     <mdb-col sm="9">
       <mdb-row>
         <mdb-col>
-          <AssignmentsList v-bind:chores="chores" v-bind:currentUser="currentUser" v-bind:visibility="visibility" />
+          <AssignmentsList v-bind:chores="chores" v-bind:currentUser="currentUser" />
         </mdb-col>
       </mdb-row>
       <mdb-row>
@@ -63,7 +63,6 @@ export default {
       format,
       grabbedUser: {},
       completedAssignments: {},
-      visibility: "",
     };
   },
   created: function () {
@@ -77,7 +76,7 @@ export default {
   methods: {
     checkVisibility: function () {
       if (this.$route.query.visibility) {
-        this.visibility = this.$route.query.visibility;
+        this.$store.state.visibility = this.$route.query.visibility;
         console.log(`visibility: ${this.visibility}`);
       }
     },

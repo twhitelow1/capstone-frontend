@@ -8,7 +8,7 @@ export const store = new Vuex.Store({
     currentUser: {},
     assignments: [],
     filteredAssignments: [],
-    visibility: "you",
+    visibilityy: "all",
   },
   mutations: {
     setCurrentUser(state, user) {
@@ -39,19 +39,19 @@ export const store = new Vuex.Store({
       });
     },
     filterAssignments: function (state) {
-      const filters = {
-        all: assignments => assignments.filter(assignments => !assignments.completed),
-        you: assignments =>
-          assignments
-            .filter(assignment => !assignment.completed)
-            .filter(assignment => assignment.user.id === state.currentUser.id),
-        completed: assignments =>
-          assignments
-            .filter(assignment => assignment.completed)
-            .filter(assignment => assignment.user.id === state.currentUser.id),
-      };
-
-      state.filteredAssignments = filters[state.visibility](state.assignments);
+      // const filters = {
+      //   all: assignments => assignments.filter(assignments => !assignments.completed),
+      //   you: assignments =>
+      //     assignments
+      //       .filter(assignment => !assignment.completed)
+      //       .filter(assignment => assignment.user.id === state.currentUser.id),
+      //   completed: assignments =>
+      //     assignments
+      //       .filter(assignment => assignment.completed)
+      //       .filter(assignment => assignment.user.id === state.currentUser.id),
+      // };
+      state.filteredAssignments = this.assignments;
+      // state.filteredAssignments = filters[state.visibility](state.assignments);
     },
     changeVisibility(state, visibility) {
       state.visibility = visibility;

@@ -87,11 +87,11 @@
         <br />
         <show-at breakpoint="large">
           <div style="line-height:1.5em;">
-            <a class="filter-link" @click="changeVisibility('all')">All Assignments</a>
+            <a class="filter-link" href="?visibility=all">All Assignments</a>
             |
-            <a class="filter-link" @click="changeVisibility('you')">Assigned To You</a>
+            <a class="filter-link" href="?visibility=you">Assigned To You</a>
             |
-            <a class="filter-link" @click="changeVisibility('completed')">Finished</a>
+            <a class="filter-link" href="?visibility=finished">Finished</a>
           </div>
         </show-at>
       </div>

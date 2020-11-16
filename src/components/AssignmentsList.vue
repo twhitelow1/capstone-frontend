@@ -36,7 +36,7 @@
 
             <mdb-tbl-body>
               <tr
-                v-for="assignment in this.$store.state.filteredAssignments"
+                v-for="assignment in this.$store.state.assignments"
                 :key="`assign-${assignment.id}`"
                 scope="row"
                 class="text-center assingment-row"
@@ -280,6 +280,7 @@ export default {
   props: {
     chores: Array,
     currentUser: { home: { users: {} } },
+    visibility: String,
   },
   data: function () {
     return {
@@ -289,7 +290,6 @@ export default {
       grabbedUser: {},
       format,
       completedAssignments: {},
-      visibility: "active",
       modal: false,
       addNewModal: false,
       selected: [],
@@ -329,7 +329,7 @@ export default {
       this.modal = true;
     },
     indexAssignments: function () {
-      axios.get("/api/assignments/" + ).then((response) => {
+      axios.get("/api/assignments/?visibility=" + this.$store.state.visibility).then((response) => {
         console.log("asignments index", response);
         this.assignments = response.data;
         this.$store.commit("loadAssignments", response.data);
