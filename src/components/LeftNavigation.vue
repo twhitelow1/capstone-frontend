@@ -24,7 +24,7 @@
             </mdb-col>
             <mdb-col col="9">
               <p style="font-weight: bold; font-size:18px;">
-                <!-- {{ currentUser.home.addr_street }} {{ currentUser.home.addr_unit }} -->
+                {{ currentUser.home.addr_street }} {{ currentUser.home.addr_unit }}
                 <br />
                 {{ currentUser.home.addr_city }} {{ currentUser.home.addr_state }} {{ currentUser.home.addr_zip }}
               </p>

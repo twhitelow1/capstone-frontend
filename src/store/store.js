@@ -48,7 +48,7 @@ export const store = new Vuex.Store({
         completed: assignments =>
           assignments
             .filter(assignment => assignment.completed)
-            .filter(assignment => assignment.user.id !== state.currentUser.id),
+            .filter(assignment => assignment.user.id === state.currentUser.id),
       };
 
       state.filteredAssignments = filters[state.visibility](state.assignments);

@@ -42,7 +42,7 @@ export default {
     mdbInput,
     mdbBtn,
   },
-  data: function() {
+  data: function () {
     return {
       email: "",
       password: "",
@@ -50,21 +50,20 @@ export default {
     };
   },
   methods: {
-    submit: function() {
+    submit: function () {
       var params = {
         email: this.email,
         password: this.password,
       };
       axios
         .post("/api/sessions", params)
-        .then(response => {
-          axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
+        .then((response) => {
           localStorage.setItem("jwt", response.data.jwt);
           this.$router.push("/");
           console.log(response.data.jwt);
         })
         // eslint-disable-next-line no-unused-vars
-        .catch(error => {
+        .catch((error) => {
           this.errors = ["Invalid email or password."];
           this.email = "";
           this.password = "";

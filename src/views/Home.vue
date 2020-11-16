@@ -11,10 +11,10 @@
       </mdb-row>
       <mdb-row>
         <mdb-col class="col-xl-6">
-          <ChoresList v-bind:chores="chores" />
+          <!-- <ChoresList v-bind:chores="chores" />
         </mdb-col>
         <mdb-col class="col-xl-6">
-          <ChoresList v-bind:chores="chores" />
+          <ChoresList v-bind:chores="chores" /> -->
         </mdb-col>
       </mdb-row>
     </mdb-col>
@@ -41,15 +41,8 @@ body {
 import axios from "axios";
 import { parseISO, format } from "date-fns";
 import AssignmentsList from "../components/AssignmentsList";
-import ChoresList from "../components/ChoresList";
 import LeftNavigation from "../components/LeftNavigation";
 import { mdbCol, mdbRow } from "mdbvue";
-
-const filters = {
-  all: (assignments) => assignments,
-  active: (assignments) => assignments.filter((assignment) => !assignment.completed),
-  completed: (assignments) => assignments.filter((assignment) => assignment.completed),
-};
 
 export default {
   components: {
@@ -57,7 +50,6 @@ export default {
     mdbCol,
     mdbRow,
     LeftNavigation,
-    ChoresList,
   },
   data: function () {
     return {
@@ -81,11 +73,6 @@ export default {
   },
   mounted: function () {
     this.checkVisibility();
-  },
-  computed: {
-    filteredAssignments: function () {
-      return filters[this.visibility](this.assignments);
-    },
   },
   methods: {
     checkVisibility: function () {

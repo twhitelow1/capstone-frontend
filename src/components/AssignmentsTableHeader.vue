@@ -9,6 +9,7 @@
         </h4>
       </mdb-modal-header>
       <mdb-modal-body class="grey-text">
+        <!-- Chore Name -->
         <mdb-row class="align-items-center justify-content-between mb-2">
           <mdb-col class="d-flex justify-content-start">
             <label for="select-user">Chore:</label>
@@ -29,6 +30,7 @@
           <mdb-col class="d-flex justify-content-end p-0">
             <select class="custom-select" name="select-user" id="select-user" v-model="newAssignmentUserId">
               <option disabled>Select House Member</option>
+              <option :value="`${currentUser.id}`">{{ currentUser.first_name }}</option>
               <option
                 v-for="(housemate, index) in currentUser.housemates"
                 :key="`mem${index}`"
