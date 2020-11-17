@@ -18,7 +18,7 @@
             <select class="custom-select" name="select-chore" id="select-chore" v-model="newAssignmentChoreId">
               <option disabled value="none">Select Chore</option>
               <option v-for="(chore, index) in chores" :key="`m-${index}`" :value="`${chore.id}`">
-                {{ chore.title }}
+                {{ chore.title }} - ({{ chore.points_price }})
               </option>
             </select>
           </mdb-col>
@@ -165,6 +165,18 @@ export default {
     this.indexUsers();
   },
   methods: {
+    updatePoints: function (user_id, points) {
+      const params = { points: points };
+      axios
+        .patch("/api/users/" + user_id, params)
+        .then((response) => {
+          console.log("add user points completed", response);
+          this.$store.commit("updatePoints", user_id, points);
+        })
+        .catch((error) => {
+          console.log("add points error", error.response);
+        });
+    },
     changeVisibility: function (handle) {
       this.$store.commit("changeVisibility", handle);
       this.$store.commit("filterAssignments");
@@ -182,35 +194,34 @@ export default {
         due_date: this.newAssignmentDueDate,
         assigner_id: this.currentUser.id,
       };
-      console.log(`params: ${params}`);
+      console.log("chore id:" + this.newAssignmentChoreId);
+      const chorePrice = this.getChorePrice(this.newAssignmentChoreId);
+      console.log(chorePrice);
+      const userPoints = this.currentUser.points;
+      const newTotal = parseInt(userPoints) - parseInt(chorePrice);
+      console.log(`new total: ${newTotal}`);
+      this.updatePoints(this.currentUser.id, newTotal);
       axios
         .post("/api/assignments", params)
         .then((response) => {
           this.addNewModal = false;
           console.log("assignments create", response);
           this.$store.commit("addAssignment", response.data);
-          this.$store.commit("filterAssignments");
-
-          console.log(this.$store.state.assignments);
         })
         .catch((error) => {
           console.log("assignments create error", error.response);
         });
     },
-    addAssignment: function (event) {
-      alert(event.target.value);
-    },
-    addPoints: function (user_id, points) {
-      const params = { points };
-      axios
-        .patch("/api/users/" + user_id, params)
-        .then((response) => {
-          console.log("add user points completed", response);
-          this.$store.commit("updatePoints", user_id, points);
-        })
-        .catch((error) => {
-          console.log("add points error", error.response);
-        });
+    getChorePrice: function (choreId) {
+      let chorePrice = 0;
+      this.chores.forEach((chore) => {
+        console.log(`inside chores foreach ${choreId}`);
+        if (chore.id === parseInt(choreId)) {
+          chorePrice = chore.points_price;
+        }
+      });
+      console.log(`chore price: ${chorePrice}`);
+      return chorePrice;
     },
     indexAssignments: function () {
       axios.get("/api/assignments/?visibility=" + this.$store.state.visibility).then((response) => {
@@ -238,11 +249,8 @@ export default {
       });
       console.log(doneAssignments);
       doneAssignments.forEach((assignment) => {
-        console.log(`user id who earned: ${assignment.user.id}`);
-        console.log(`current points: ${assignment.user.points}`);
-        console.log(`points earned: ${assignment.chore.points_gain}`);
         const totalPoints = assignment.user.points + assignment.chore.points_gain;
-        this.addPoints(assignment.user.id, totalPoints);
+        this.updatePoints(assignment.user.id, totalPoints);
       });
       axios
         .patch("/api/assignments/completed", params)
