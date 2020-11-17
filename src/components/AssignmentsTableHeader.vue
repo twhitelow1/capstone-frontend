@@ -144,10 +144,10 @@ export default {
     chores: Array,
     currentUser: Object,
     selected: Array,
+    assignments: Array,
   },
   data: function () {
     return {
-      assignments: [],
       users: [],
       houseMembers: ["Todd", "Kiya"],
       newAssignmentUserId: 0,
@@ -200,18 +200,56 @@ export default {
     addAssignment: function (event) {
       alert(event.target.value);
     },
+    addPoints: function (user_id, points) {
+      const params = { points };
+      axios
+        .patch("/api/users/" + user_id, params)
+        .then((response) => {
+          console.log("add user points completed", response);
+          this.$store.commit("updatePoints", user_id, points);
+        })
+        .catch((error) => {
+          console.log("add points error", error.response);
+        });
+    },
+    indexAssignments: function () {
+      axios.get("/api/assignments/?visibility=" + this.$store.state.visibility).then((response) => {
+        console.log("asignments index", response);
+        this.assignments = response.data;
+        this.$store.commit("loadAssignments", response.data);
+        this.$store.commit("filterAssignments");
+        console.log(`store assignments ${this.$store.state.assignments}`);
+      });
+    },
     completeAssignment: function (assignments) {
       const params = {
         assignments,
       };
-      console.log(`params: ${params}`);
-      console.log(`checked assignments: ${this.selected}`);
+      const doneAssignments = [];
+      // eslint-disable-next-line prettier/prettier
+      this.selected.forEach((assignment_id) => {
+        // eslint-disable-next-line prettier/prettier
+        this.assignments.forEach((assignment) => {
+          if (assignment.id === assignment_id) {
+            doneAssignments.push(assignment);
+            console.log(`added: ${assignment}`);
+          }
+        });
+      });
+      console.log(doneAssignments);
+      doneAssignments.forEach((assignment) => {
+        console.log(`user id who earned: ${assignment.user.id}`);
+        console.log(`current points: ${assignment.user.points}`);
+        console.log(`points earned: ${assignment.chore.points_gain}`);
+        const totalPoints = assignment.user.points + assignment.chore.points_gain;
+        this.addPoints(assignment.user.id, totalPoints);
+      });
       axios
         .patch("/api/assignments/completed", params)
         .then((response) => {
           console.log("assignment completed", response);
           this.$store.commit("completeAssignments", assignments);
-          this.$store.commit("filterAssignments");
+          this.indexAssignments();
         })
         .catch((error) => {
           console.log("assignments create error", error.response);

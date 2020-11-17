@@ -9,10 +9,26 @@ export const store = new Vuex.Store({
     assignments: [],
     filteredAssignments: [],
     visibilityy: "all",
+    users: [],
   },
   mutations: {
+    getUsers(state, users) {
+      state.user = users;
+    },
+    updatePoints(state, user_id, points) {
+      state.users.forEach(user => {
+        if (user.id === user_id) {
+          user.points = points;
+        }
+      });
+    },
     setCurrentUser(state, user) {
       state.currentUser = user;
+    },
+    completeAssignment(state, assignmentIds) {
+      assignmentIds.forEach(id => {
+        state.assignments = state.assignments.filter(assignment => assignment.id !== id);
+      });
     },
     addAssignment(state, assignment) {
       state.assignments.push(assignment);
@@ -29,7 +45,6 @@ export const store = new Vuex.Store({
     },
     completeAssignments(state, assignments) {
       assignments.forEach(assignmentId => {
-        console.log(`show assignment id: ${assignmentId}`);
         state.assignments.forEach(assignment => {
           if (assignment.id === assignmentId) {
             assignment.completed = true;
@@ -37,21 +52,10 @@ export const store = new Vuex.Store({
           }
         });
       });
+      state.assignments;
     },
-    filterAssignments: function (state) {
-      // const filters = {
-      //   all: assignments => assignments.filter(assignments => !assignments.completed),
-      //   you: assignments =>
-      //     assignments
-      //       .filter(assignment => !assignment.completed)
-      //       .filter(assignment => assignment.user.id === state.currentUser.id),
-      //   completed: assignments =>
-      //     assignments
-      //       .filter(assignment => assignment.completed)
-      //       .filter(assignment => assignment.user.id === state.currentUser.id),
-      // };
-      state.filteredAssignments = this.assignments;
-      // state.filteredAssignments = filters[state.visibility](state.assignments);
+    filterAssignments: function (state, assignments) {
+      state.filteredAssignments = assignments;
     },
     changeVisibility(state, visibility) {
       state.visibility = visibility;
@@ -61,5 +65,6 @@ export const store = new Vuex.Store({
     assignments: state => state.assignments,
     visibility: state => state.visibility,
     currentUser: state => state.currentUser,
+    users: state => state.users,
   },
 });
