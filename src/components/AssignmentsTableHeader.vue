@@ -3,7 +3,7 @@
     <!-- Add  modal form from mdb here instead -->
     <mdb-modal :show="addNewModal" @close="addNewModal = false" cascade>
       <mdb-modal-header class="default-color-dark white-text">
-        <h4 class="title">
+        <h4 class="title h4">
           <i class="fas fa-plus" />
           Assign A Chore
         </h4>
@@ -16,7 +16,7 @@
           </mdb-col>
           <mdb-col class="d-flex justify-content-end p-0">
             <select class="custom-select" name="select-chore" id="select-chore" v-model="newAssignmentChoreId">
-              <option disabled value="none">Select Chore</option>
+              <option disabled value="none">Select Chore - (Points)</option>
               <option v-for="(chore, index) in chores" :key="`m-${index}`" :value="`${chore.id}`">
                 {{ chore.title }} - ({{ chore.points_price }})
               </option>
@@ -82,7 +82,7 @@
         </mdb-tooltip>
       </div>
       <div class="text-white">
-        <a href="" class="white-text mx-3 h4">Assigned Chores</a>
+        <a href="" class="white-text mx-3 h2">Assigned Chores</a>
         <br />
         <br />
         <show-at breakpoint="large">
