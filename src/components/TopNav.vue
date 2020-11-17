@@ -12,6 +12,7 @@
     <mdb-navbar-toggler target="nav-collapse">
       <mdb-navbar-nav right>
         <mdb-nav-item href="/" waves-fixed>Dashboard</mdb-nav-item>
+        <mdb-nav-item href="/leaderboard" waves-fixed>Leaderboard</mdb-nav-item>
         <mdb-nav-item v-if="!isLoggedIn()" href="/signup" waves-fixed>Signup</mdb-nav-item>
         <mdb-nav-item v-if="!isLoggedIn()" href="/login" waves-fixed>Login</mdb-nav-item>
         <mdb-nav-item v-if="isLoggedIn()" href="/logout" waves-fixed>Logout</mdb-nav-item>
