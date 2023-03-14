@@ -13,7 +13,7 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.19.0",
     "chart.js": "^2.9.4",
-    "core-js": "^3.6.5",
+    "core-js": "^3.2.0",
     "d3-scale": "^3.2.3",
     "date-fns": "^2.16.1",
     "git-tags-remote": "^1.0.3",
